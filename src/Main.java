@@ -8,6 +8,10 @@ import View.View;
  
 public class Main {
   public static void main(String[] args) throws SQLException{
-	  Controller controller = new Controller(new Model(), new View());
+	  Model model = new Model();
+	  View view = new View();
+	  Controller controller = new Controller(model, view);
+	  view.setController(controller);
+	  
   }       
 }

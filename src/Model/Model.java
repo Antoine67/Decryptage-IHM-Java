@@ -1,10 +1,14 @@
 package Model;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,22 +31,31 @@ public class Model {
 			System.out.println(data);
 
 			dictionary = cutAndStoreAsArray(getData("assets/dictionnaireDeMots.txt"), "\n");
-			System.out.println("^"+dictionary.get(26)+"^");
 			
-			System.out.println("^"+selectWord("abaisse-langue")+"^");
+			
 			
 			/* Exemple d'utilisation:
-			 * 
+			 
+			 
+			//Chercher en BDD la correspondance du login/password
 			System.out.println(databaseDAO.selectIDbyLoginPassword("admin","mdp123"));
 			
+			
+			//Manip fichiers
 			System.out.println(getData(".gitignore"));
 			setData("testSetData","blabla");
+			
+			//Trouver un mot dans le dico de mots
+			System.out.println(selectWord("abaisse-laangue"));
+			
 			*/
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+
 	
 	
 	
@@ -60,23 +73,21 @@ public class Model {
 
 	public String getData(String path) {
 
-		try {
-		FileReader file = new FileReader(path);
 		StringBuilder str = new StringBuilder();
 		
-		int i; 
-	    while ((i=file.read()) != -1) {
-	      str.append((char) i); 
-	    }
-	    file.close();
-	    return str.toString();
-	    
-	    
-		}catch(FileNotFoundException e) {
-			return "Fichier introuvable ! ("+path+")"+ e.toString();
-		}catch (IOException e) {
-			return e.toString();
-		}
+		
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(path))) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                str.append(line).append("\n");
+            }
+
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+
+        return str.toString();
 	  
 	}
 
@@ -106,6 +117,11 @@ public class Model {
 
 	/* Composant de mappage de la table dictionnaire [Map_Dic] */
 
+	/**
+	 * Check if a given word is in the french dictionary
+	 * @param word to find in the dictionary
+	 * @return the word if found, null in others case
+	 */
 	public String selectWord (String word) {
 		if(dictionary.contains(word)) {
 			return word;
@@ -113,11 +129,16 @@ public class Model {
 	}
 	
 	
+	/**
+	 * Cut a string and store it as an array 
+	 * @param str initial string
+	 * @param divider the divider between two words
+	 * @return
+	 */
 	private ArrayList<String> cutAndStoreAsArray(String str, String divider) {
 		String array[]; 
 		str = str.replace("\r", ""); /* suppression des retours chariots */
 		array = str.split(divider);
-		System.out.println(array);
 		
 
 		
