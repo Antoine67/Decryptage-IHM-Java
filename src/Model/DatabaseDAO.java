@@ -24,7 +24,7 @@ final class DatabaseDAO {
     private static String                  password = "";
 
     /** The url. */
-    private static String                  url      = "jdbc:mysql://localhost/lorann?useSSL=false&serverTimezone=UTC";
+    private static String                  url      = "jdbc:mysql://localhost:3306/decryptage?useSSL=false&serverTimezone=UTC";
 
     /** The connection. */
     private Connection                     connection;
@@ -32,17 +32,14 @@ final class DatabaseDAO {
     /** The statement. */
     private Statement                      statement;
 
-    /**
-     * Instantiates a new boulder dash BDD connector.
-     */
     private DatabaseDAO() {
         this.open();
     }
 
     /**
-     * Gets the single instance of BoulderDashBDDConnector.
+     * Gets the single instance
      *
-     * @return single instance of BoulderDashBDDConnector
+     * @return single instance
      */
     public static DatabaseDAO getInstance() {
         if (instance == null) {

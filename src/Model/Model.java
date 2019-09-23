@@ -2,5 +2,5 @@ package Model;
 
 public class Model {
 	
-	private DatabaseDAO databaseDAO = new DatabaseDAO();
+	private DatabaseDAO databaseDAO = DatabaseDAO.getInstance();
 }
