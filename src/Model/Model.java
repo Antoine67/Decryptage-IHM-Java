@@ -35,17 +35,17 @@ public class Model {
 	
 	 /* Composant d’accès aux données [CAD] */
 
-	ArrayList<User> getRows(String rq_sql, String resultSetName) throws SQLException {
+	public ArrayList<User> getRows(String rq_sql, String resultSetName) throws SQLException {
 		return databaseDAO.getRows(rq_sql, resultSetName);
 	}
 
-	void actionRows(String rq_sql) /* – Optionnel */ {
+	public void actionRows(String rq_sql) /* Optionnel */ {
 		databaseDAO.actionRows(rq_sql);
 	}
 
 	/* Composant de manipulation de fichiers [Files] */
 
-	String getData(String path) {
+	public String getData(String path) {
 
 		try {
 		FileReader file = new FileReader(path);
@@ -57,6 +57,8 @@ public class Model {
 	    }
 	    file.close();
 	    return str.toString();
+	    
+	    
 		}catch(FileNotFoundException e) {
 			return e.toString();
 		}catch (IOException e) {
@@ -65,7 +67,7 @@ public class Model {
 	  
 	}
 
-	void setData(String path, String data) {
+	public void setData(String path, String data) {
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(path));
@@ -79,19 +81,19 @@ public class Model {
 
 	/* Composant de décryptage [Decrypt] */
 
-	String decrypt(String data, String key) {
+	public String decrypt(String data, String key) {
 		return null; //TODO
 	}
 
 	/* Composant de mappage de la table personne [Map_P] */
 
-	String selectIDbyLoginPassword(String login, String password) throws SQLException {
+	public String selectIDbyLoginPassword(String login, String password) throws SQLException {
 		return databaseDAO.selectIDbyLoginPassword(login, password);
 	}
 
 	/* Composant de mappage de la table dictionnaire [Map_Dic] */
 
-	String selectWord (String word) {
+	public String selectWord (String word) {
 		return null; // TODO
 	}
 	
