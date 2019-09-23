@@ -1,5 +1,7 @@
 package View;
 
+import java.sql.SQLException;
+
 import javax.swing.JPanel;
 
 import Controller.Controller;
@@ -34,7 +36,12 @@ public class View {
 	/* Auth */ 
 
 	public void wantToConnect(String login, String password) {
-		controller.wantToConnect(login, password);
+		try {
+			controller.wantToConnect(login, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void connectionSuccessful() {

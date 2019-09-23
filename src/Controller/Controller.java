@@ -8,35 +8,38 @@ import View.View;
 public class Controller {
 	private Model model;
 	private View view;
+	private Decrypter decrypter;
 
 	public Controller(Model model, View view) throws SQLException {
 		this.model = model;
 		this.view = view;
+		this.decrypter = new Decrypter();
+		this.decrypter.letsDecrypt();
 	}
 	
-	public void wantToConnect() throws SQLException {
+	public void wantToConnect(String login, String password) throws SQLException {
 		//isConnected is the returned attribute
-		Boolean isConnected = new Boolean(isConnected);
+		Boolean isConnected = false;
 		
 		//Search the login and password in the view
-		isConnected = this.pcs_authentifier(view.getLogin(), view.getPassword());
+		isConnected = this.pcs_authentifier(login, password);
 		
 		//Tell the View if the user is connected or not
 		if(isConnected) {
-			view.isConnected(view.getLogin());
+			view.connectionSuccessful();
 		}
 		else {
-			view.isntConnected();
+			view.connectionFailed();
 		}
 	}
 	
 	public void wantToDecript() {
 		//Tell to the user that the file is decrypted
-		if(pcs_decrypter(view.getSourcePath, view.getDestinationPath)) {
-			view.succesMessage();
+		if(pcs_decrypter(view.getSourcePath(), view.getDestinationPath())) {
+			view.displayMessage("Succes", view.SUCCESS);
 		}
 		else {
-			view.failMessage();
+			view.displayMessage("Failed", view.FAIL);
 		}
 	}
 	
