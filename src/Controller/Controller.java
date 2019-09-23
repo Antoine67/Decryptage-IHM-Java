@@ -1,10 +1,10 @@
 package Controller;
 
 import Model.Model;
-import Vue.Fenetre;
+import View.View;
 
 public class Controller {
-	public Controller(Model model, Fenetre fenetre) {
+	public Controller(Model model, View view) {
 		
 	}
 
