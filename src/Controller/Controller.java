@@ -28,7 +28,16 @@ public class Controller {
 		else {
 			view.isntConnected();
 		}
-		
+	}
+	
+	public void wantToDecript() {
+		//Tell to the user that the file is decrypted
+		if(pcs_decrypter(view.getSourcePath, view.getDestinationPath)) {
+			view.succesMessage();
+		}
+		else {
+			view.failMessage();
+		}
 	}
 	
 	public Boolean pcs_authentifier(String login, String password) throws SQLException {
