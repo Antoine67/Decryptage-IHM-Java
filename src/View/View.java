@@ -16,11 +16,8 @@ public class View {
 	
 
 
-	public View() {
+	public View(Controller controller) {
 		this.frame = new Frame(this);
-	}
-	
-	public void setController(Controller controller) {
 		this.controller = controller;
 	}
 	
@@ -37,9 +34,9 @@ public class View {
 
 	public void wantToConnect(String login, String password) {
 		try {
+			System.out.println(controller);
 			controller.wantToConnect(login, password);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

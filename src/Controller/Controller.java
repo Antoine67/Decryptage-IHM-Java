@@ -10,9 +10,7 @@ public class Controller {
 	private View view;
 	private Decrypter decrypter;
 
-	public Controller(Model model, View view) throws SQLException {
-		this.model = model;
-		this.view = view;
+	public Controller() throws SQLException {
 		this.decrypter = new Decrypter();
 		this.decrypter.letsDecrypt();
 	}
@@ -62,6 +60,12 @@ public class Controller {
 		//After the decrypter
 		model.setData(destination_path, textUncrypted);
 		return true;
+	}
+
+	public void setModelAndView(Model model, View view) {
+		this.model = model;
+		this.view = view;
+		
 	}
 
 }
