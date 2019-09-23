@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -123,30 +126,14 @@ final class DatabaseDAO {
         return 0;
     }
 
-    /**
-     * Gets the connection.
-     *
-     * @return the connection
-     */
     public Connection getConnection() {
         return this.connection;
     }
 
-    /**
-     * Sets the connection.
-     *
-     * @param connection
-     *            the new connection
-     */
     public void setConnection(final Connection connection) {
         this.connection = connection;
     }
 
-    /**
-     * Gets the statement.
-     *
-     * @return the statement
-     */
     public Statement getStatement() {
         return this.statement;
     }
@@ -160,5 +147,34 @@ final class DatabaseDAO {
     public void setStatement(final Statement statement) {
         this.statement = statement;
     }
+    
+    
+    
+    
+    
+    
+    ArrayList<User> getRows(String rq_sql, String resultSetName) throws SQLException {
+    	ResultSet rs = executeQuery(rq_sql);
+    	ArrayList<User> rows = new ArrayList<User>();
+    	while(rs.next()) {
+    		rows.add(new User(rs.getInt("id"), rs.getString("user"), rs.getString("password")));
+    	}
+    	return rows;
+    }
+    
+    void actionRows(String rq_sql) {
+    	
+    }
+    
+    String selectIDbyLoginPassword(String login, String password) throws SQLException {
+    	ResultSet rs =  executeQuery("SELECT id FROM users WHERE user='"+login+"'AND password='"+password+"'");
+    	if(rs.next()) {
+    		 return rs.getString(1);
+    	}else return null;
+    }
+    
+    
+    
+    
 
 }
