@@ -23,10 +23,13 @@ public class View {
 	
 	
 	public void displayMessage(String message, int state) {
+		
+		Panel panel = this.frame.getCurrentPanel();
+		System.out.println(message);
 		if(state == SUCCESS) {
-			
+			panel.displaySuccessMessage(message);
 		}else if (state == FAIL) {
-			
+			panel.displayErrorMessage(message);
 		}
 	}
 	
@@ -34,7 +37,6 @@ public class View {
 
 	public void wantToConnect(String login, String password) {
 		try {
-			System.out.println(controller);
 			controller.wantToConnect(login, password);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -46,7 +48,7 @@ public class View {
 	}
 	
 	public void connectionFailed() {
-		
+		displayMessage("Invalid creditentials ...", FAIL);
 	}
 	
 	

@@ -9,14 +9,14 @@ import javax.swing.JPanel;
 public class Frame extends JFrame {
 
 	
-	public JPanel currentPanel;
+	public Panel currentPanel;
 	
 	
 	
 	
 	  public Frame(View view){
 		  
-		currentPanel = new Panel(view);  
+		currentPanel = new Panel(view, this);  
 		  
 		this.setTitle("MadMax");
 		this.setSize(400, 500);
@@ -30,11 +30,11 @@ public class Frame extends JFrame {
 	  }
 
 
-	public JPanel getCurrentPanel() {
+	public Panel getCurrentPanel() {
 		return currentPanel;
 	}
 
-	public void setCurrentPanel(JPanel currentPanel) {
+	public void setCurrentPanel(Panel currentPanel) {
 		this.currentPanel = currentPanel;
 	}       
 	  

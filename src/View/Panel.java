@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,24 +26,30 @@ public class Panel extends JPanel {
 	  private JLabel loginlab = new JLabel("Login");
 	  private JLabel passwordlab = new JLabel("Password");
 	  private JButton signin = new JButton ("Sign In");
+	  private JLabel messageDisplayer = new JLabel("Enter your creditentials :", JLabel.CENTER);
 	  
 	  
 	  private View view;
+	private Frame frame;
 	  
-	public Panel(View view) {
+	public Panel(View view,Frame frame) {
 		this.view = view;
+		this.frame = frame;
 		
 		this.add(loginlab);
 	    this.add(login);
 	    this.add(passwordlab);
 	    this.add(password);
 	    this.add(signin);
+	    this.add(messageDisplayer);
 	    this.setBackground(Color.white);
 	    this.setVisible(true); 
 	    this.setLayout(null);
 	    
 
 	    signin.setSize(350,40);
+	    
+	    messageDisplayer.setBounds(10,110,380,100 );
 	    
 	    loginlab.setBounds(100,205, 200,25);  
 	    login.setBounds(100,240, 200,25);  
@@ -77,6 +84,22 @@ public class Panel extends JPanel {
 		    	view.wantToConnect(login.getText(),password.getText());
 		    }
 		  }
+
+
+
+
+	public void displayErrorMessage(String message) {
+		messageDisplayer.setBackground(Color.red);
+		messageDisplayer.setText(message);
+		frame.repaint();
+		frame.revalidate();
+	}
+
+
+	public void displaySuccessMessage(String message) {
+		messageDisplayer.setBackground(Color.green);
+		messageDisplayer.setText(message);
+	}
 	  
 	  
 	  
