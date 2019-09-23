@@ -7,16 +7,29 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Model {
 	
 	private DatabaseDAO databaseDAO = DatabaseDAO.getInstance();
+	
+	/*Dictionary as string then cut and store it as an ArrayList*/
 
+	private ArrayList<String> dictionary = new ArrayList<String>();
+	
+	
 	public Model() {
+		
+		
 		
 		try {
 			ArrayList<User> data = databaseDAO.getRows("SELECT * FROM users","");
 			System.out.println(data);
+
+			dictionary = cutAndStoreAsArray(getData("assets/dictionnaireDeMots.txt"), "\n");
+			System.out.println("^"+dictionary.get(26)+"^");
+			
+			System.out.println("^"+selectWord("abaisse-langue")+"^");
 			
 			/* Exemple d'utilisation:
 			 * 
@@ -60,7 +73,7 @@ public class Model {
 	    
 	    
 		}catch(FileNotFoundException e) {
-			return e.toString();
+			return "Fichier introuvable ! ("+path+")"+ e.toString();
 		}catch (IOException e) {
 			return e.toString();
 		}
@@ -94,7 +107,22 @@ public class Model {
 	/* Composant de mappage de la table dictionnaire [Map_Dic] */
 
 	public String selectWord (String word) {
-		return null; // TODO
+		if(dictionary.contains(word)) {
+			return word;
+		}else return null;
+	}
+	
+	
+	private ArrayList<String> cutAndStoreAsArray(String str, String divider) {
+		String array[]; 
+		str = str.replace("\r", ""); /* suppression des retours chariots */
+		array = str.split(divider);
+		System.out.println(array);
+		
+
+		
+		ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(array));
+		return arrayList;
 	}
 	
 	

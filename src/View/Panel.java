@@ -28,7 +28,7 @@ public class Panel extends JPanel {
 	public void paintComponent(Graphics g){
 		
 		try {
-		      Image img = ImageIO.read(new File("D:\\eclipse-workspace\\GUI\\src\\images\\cesi.png"));
+		      Image img = ImageIO.read(new File("assets/img/cesi.png"));
 		      g.drawImage(img, 100, 50, this);
 		    } 
 		catch (IOException e) {
