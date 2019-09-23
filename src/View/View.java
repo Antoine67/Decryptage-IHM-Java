@@ -1,5 +1,7 @@
 package View;
 
+import javax.swing.JPanel;
+
 import Controller.Controller;
 
 public class View {
@@ -8,10 +10,12 @@ public class View {
 	public static int SUCCESS = 1;
 	public static int FAIL = 2;
 	
+	private Frame frame;
+	
+
 
 	public View() {
-		Frame frame = new Frame();
-		
+		this.frame = new Frame(this);
 	}
 	
 	public void setController(Controller controller) {
@@ -28,20 +32,16 @@ public class View {
 	}
 	
 	/* Auth */ 
-	public String getLogin() {
-		return null;
+
+	public void wantToConnect(String login, String password) {
+		controller.wantToConnect(login, password);
 	}
 	
-	public String getPassword() {
-		return null;
-	}
-	
-	
-	public void connexionSuccessful() {
+	public void connectionSuccessful() {
 		
 	}
 	
-	public void connexionFailed() {
+	public void connectionFailed() {
 		
 	}
 	
