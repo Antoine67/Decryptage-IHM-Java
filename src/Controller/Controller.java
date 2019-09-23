@@ -1,5 +1,7 @@
 package Controller;
 
+import java.sql.SQLException;
+
 import Model.Model;
 import View.View;
 
@@ -7,12 +9,12 @@ public class Controller {
 	private Model model;
 	private View view;
 
-	public Controller(Model model, View view) {
+	public Controller(Model model, View view) throws SQLException {
 		this.model = model;
 		this.view = view;
 	}
 	
-	public void wantToConnect() {
+	public void wantToConnect() throws SQLException {
 		//isConnected is the returned attribute
 		Boolean isConnected = new Boolean(isConnected);
 		
@@ -26,9 +28,10 @@ public class Controller {
 		else {
 			view.isntConnected();
 		}
+		
 	}
 	
-	public Boolean pcs_authentifier(String login, String password) {
+	public Boolean pcs_authentifier(String login, String password) throws SQLException {
 		//Check if this login + password exist
 		if(model.selectIDbyLoginPassword(login, password) != null) {
 			return true;
@@ -39,6 +42,13 @@ public class Controller {
 	}
 	
 	public Boolean pcs_decrypter(String source_path, String destination_path) {
+		String textCrypted = new String();
+		String textUncrypted = new String();
+		//Get the crypted file
+		textCrypted = model.getData(source_path);
+		
+		//After the decrypter
+		model.setData(destination_path, textUncrypted);
 		return true;
 	}
 
