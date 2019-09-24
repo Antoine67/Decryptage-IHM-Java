@@ -12,9 +12,18 @@ public class Decrypter {
         int nombre, quotient, reste, result1, result2;
         String enterNumber;
         char charEnterNumber;
-        //String enter = controller.getModel().encrypt("ceci est un test", "wfeefsf");
+        String messageACrypter = "ceci";
+        String clef = "54";
+        int[] enter = controller.getModel().encrypt(messageACrypter,clef);
         String bin = "";
         String bin2 = "";
+        
+        
+	  	  
+	  	  //Crypté
+	  	  
+	  	  //Décrypté
+	  	  //System.out.println(intArrayToString(model.encrypt(intArrayToString(array), "qw")));
         /*String[] binbis = enter.split("");
         int intArray[] = new int[enter.length()];*/
         
@@ -76,7 +85,12 @@ public class Decrypter {
              }
              nombre2++;
              
-             System.out.println(controller.getModel().decrypt(controller.getModel().encrypt("ceci est un test", "wfeefsf"), envers(bin2)));
+             System.out.println(intArrayToString(controller.getModel().encrypt(intArrayToString(enter), binaryToAscii(envers(bin2)))));
+             System.out.println(envers(bin2));
+             if(validator(intArrayToString(controller.getModel().encrypt(intArrayToString(enter), binaryToAscii(envers(bin2)))))) {
+            	 System.out.println(intArrayToString(controller.getModel().encrypt(intArrayToString(enter), binaryToAscii(envers(bin2)))));
+            	 break;
+             }
         }
         //result1 = Integer.parseInt(envers(bin),2);
         //result2 = Integer.parseInt(envers(bin2),2);
@@ -99,12 +113,49 @@ public class Decrypter {
         return oui;
     }
 	
-	private int[] string2Arr(String str) {
-	      String[] sarr = str.split(",");
-	      int[] out = new int[sarr.length];
-	      for (int i = 0; i < out.length; i++) {
-	          out[i] = Integer.valueOf(sarr[i]);
-	      }
-	      return out;
+	  /**
+	   * Convert int array to String (ASCII)
+	   * "50,50,50,62" to "222<"
+	   * @param array
+	   * @return
+	   */
+	  private static String intArrayToString(int[] array) {
+		  StringBuilder str = new StringBuilder();
+		  for(int i=0; i<array.length; i++) {
+			  str.append((char)array[i]);
+		  }
+		  return str.toString();
 	  }
+	
+	private Boolean validator(String toValidate) {
+		String[] toTry = toValidate.split(" ");
+		for(int e = 0; e < toTry.length; e++) {
+			if(controller.getModel().selectWord(toTry[e]) == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	 
+	public String binaryToAscii(String binary) {
+		     //java solution
+	String binary2 = "";
+	if((binary.length() % 8) != 0){
+		int temp2 = 8 - binary.length() % 8;
+		for(int o = 0; o < temp2; o++) {
+			binary2 = binary2 + "0";
+		}
+		binary = binary2 + binary;
+	}
+	 String ascii = "";
+	 for(int index = 0; index < binary.length(); index+=8) {
+	     String temp = binary.substring(index, index+7);
+	     int num = Integer.parseInt(temp,2);
+	     char letter = (char) num;
+	     ascii = ascii + letter;
+	 }
+	    return ascii;
+	 }
+		 
 }
