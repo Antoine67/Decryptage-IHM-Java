@@ -104,7 +104,7 @@ public class Model {
 	}
 
 	/* Composant de décryptage [Decrypt] */
-
+	/*
 	public String decrypt(String data, String key) {
 		StringBuilder sb = new StringBuilder();
 		   for(int i = 0; i < data.length(); i++)
@@ -119,6 +119,7 @@ public class Model {
 	      }
 	      return output;
 	  }
+	*/
 	
 	 public int[] encrypt(String str, String key) {
 	      int[] output = new int[str.length()];
