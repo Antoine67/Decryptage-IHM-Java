@@ -27,6 +27,7 @@ public class Panel extends JPanel {
 	  
 	protected View view;
 	protected Frame frame;
+
 	  
 	public Panel(View view,Frame frame) {
 		this.view = view;

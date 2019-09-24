@@ -185,7 +185,7 @@ public class SelectPanel extends Panel {
 		    	updateFilesToDecrypt();
 		    	displaySuccessMessage("Fichiers mis à jour");
 		    }
-		  }
+	  }
 	  
 	  
 

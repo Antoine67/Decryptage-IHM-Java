@@ -95,7 +95,7 @@ public class Controller {
 			ArrayList<String> result = (ArrayList<String>) walk.filter(Files::isRegularFile)
 					.map(x -> x.toString()).collect(Collectors.toList());
 
-			result.forEach(System.out::println);
+			//result.forEach(System.out::println);
 			return result;
 
 		} catch (IOException e) {
