@@ -76,7 +76,7 @@ public class Decrypter {
              }
              nombre2++;
              
-             System.out.println(controller.getModel().m_crypt("enter", envers(bin2)));
+             System.out.println(controller.getModel().m_crypt(enter, envers(bin2)));
         }
         //result1 = Integer.parseInt(envers(bin),2);
         //result2 = Integer.parseInt(envers(bin2),2);
