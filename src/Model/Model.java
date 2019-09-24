@@ -106,8 +106,53 @@ public class Model {
 	/* Composant de décryptage [Decrypt] */
 
 	public String decrypt(String data, String key) {
-		return null; //TODO
+		StringBuilder sb = new StringBuilder();
+		   for(int i = 0; i < data.length(); i++)
+		   sb.append((char)(data.charAt(i) ^ key.charAt(i % (key.length()))));
+		   return(sb.toString());
 	}
+	
+	public String decrypt(int[] data, String key) {
+	      String output = "";        
+	      for(int i = 0; i < data.length; i++) {
+	          output += (char) ((data[i] - 48) ^ (int) key.charAt(i % (key.length() - 1)));
+	      }
+	      return output;
+	  }
+	
+	 public int[] encrypt(String str, String key) {
+	      int[] output = new int[str.length()];
+	      for(int i = 0; i < str.length(); i++) {
+	          int o = (Integer.valueOf(str.charAt(i)) ^ Integer.valueOf(key.charAt(i % (key.length() - 1)))) + '0';
+	          output[i] = o;
+	      }
+	      return output;        
+	  }
+	 
+	 
+	 public String m_crypt(String inputString, String key) {
+                    StringBuilder sb1;
+                    char c1; char c2; char c3; int i; int ii; ii=0;
+
+                    sb1= new StringBuilder();
+                   
+                    for(i=0;i<inputString.length();i++) {
+
+                         c1=inputString.charAt(i);
+                         c2=key.charAt(ii);
+                         c3 = (char)(c1^c2);
+                         sb1.append(c3);
+						 ii++;
+						
+						 if(ii == key.length()) {
+						     ii = 0;
+						 }
+		
+		            }
+                    return sb1.toString();
+	}
+
+	
 
 	/* Composant de mappage de la table personne [Map_P] */
 
