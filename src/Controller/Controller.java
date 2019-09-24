@@ -1,6 +1,15 @@
 package Controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import Model.Model;
 import View.View;
@@ -9,6 +18,8 @@ public class Controller {
 	private Model model;
 	private View view;
 	private Decrypter decrypter;
+	
+	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"/filesToDecrypt";
 
 	public Controller() throws SQLException {
 		this.decrypter = new Decrypter();
@@ -52,6 +63,9 @@ public class Controller {
 	}
 	
 	public Boolean pcs_decrypter(String source_path, String destination_path) {
+		
+		source_path = folderToStoreFileToDecrypt + "\\"+ source_path;
+		
 		String textCrypted = new String();
 		String textUncrypted = new String();
 		//Get the crypted file
@@ -66,6 +80,28 @@ public class Controller {
 		this.model = model;
 		this.view = view;
 		
+	}
+
+	public void loadFile(File selectedFile) {
+
+		model.setData(folderToStoreFileToDecrypt,model.getData(selectedFile.getPath()));
+		
+	}
+
+	public ArrayList<String> loadFilesToDecrypt() {
+		try (Stream<Path> walk = Files.walk(Paths.get(folderToStoreFileToDecrypt))) {
+
+			ArrayList<String> result = (ArrayList<String>) walk.filter(Files::isRegularFile)
+					.map(x -> x.toString()).collect(Collectors.toList());
+
+			result.forEach(System.out::println);
+			return result;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 }

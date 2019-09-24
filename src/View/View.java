@@ -2,6 +2,7 @@ package View;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -67,6 +68,15 @@ public class View {
 		controller.loadFile(selectedFile);
 		
 	}
+
+
+	public boolean pcs_decrypter(String sourcePath, String destinationPath) {
+		return controller.pcs_decrypter(sourcePath, destinationPath);
+	}
 	
+	
+	public ArrayList<String> loadFilesToDecrypt() {
+		return controller.loadFilesToDecrypt();
+	}
 	
 }

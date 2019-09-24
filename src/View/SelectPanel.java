@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -24,10 +24,12 @@ import javax.swing.JLabel;
 public class SelectPanel extends Panel {
 	
 
+	private static String INITIAL_DESTINATION = "/defaut.txt";
+	
 	private JLabel title = new JLabel("Groupe 4 - Projet Mad Max");
 	private JButton load = new JButton ("Charger un fichier crypté");
 	private JButton identify = new JButton ("Identifier le fichier de destination");
-	private JLabel identifyLabel = new JLabel("Destination: Aucune destination\r pour l'instant",JLabel.CENTER);
+	private JLabel identifyLabel = new JLabel("Destination: "+INITIAL_DESTINATION,JLabel.CENTER);
 	private JButton decrypt = new JButton ("Décrypter le fichier selectionné"); 
 	private JLabel decryptLabel = new JLabel("Fichier: Aucun fichier pour l'instant",JLabel.CENTER);
 	private JLabel filesLabel = new JLabel("Liste des fichiers cryptés enregistrés",JLabel.CENTER);
@@ -36,7 +38,7 @@ public class SelectPanel extends Panel {
 	
 	List listOfCryptedFiles = new List(5,false);
 	
-	private File destinationFile;
+	private File destinationFile = new File(Controller.Controller.folderToStoreFileToDecrypt+INITIAL_DESTINATION);
 	private File fileToDecrypt = null;
 	
 	  
@@ -44,12 +46,11 @@ public class SelectPanel extends Panel {
 		super(view,frame);
 		
 		
-		
-		
-		listOfCryptedFiles.add("super.txt");
-		listOfCryptedFiles.add("Two");
-		listOfCryptedFiles.add("Three");
-		listOfCryptedFiles.add("Four");
+		ArrayList<String> files = view.loadFilesToDecrypt();
+		files.forEach((file) -> {
+			file = file.substring(file.lastIndexOf("\\") + 1);
+			listOfCryptedFiles.add(file);
+		});
 
 		
 		this.add(title);
@@ -88,14 +89,7 @@ public class SelectPanel extends Panel {
 	    decrypt.addActionListener(new DecryptListener());
 	    listOfCryptedFiles.addActionListener(new ListActionListener());
 	    
-	    decrypt.setEnabled(false);
-	    
-	    
-	   
-	    
-		
-	    
-	    
+	    decrypt.setEnabled(false);    
 	    
 	}
 
@@ -150,7 +144,13 @@ public class SelectPanel extends Panel {
 	  
 	  class DecryptListener implements ActionListener{
 		    public void actionPerformed(ActionEvent e) {
-		    	
+	
+		    	System.out.println(destinationFile.getPath());
+		    	if(view.pcs_decrypter(fileToDecrypt.getName(),destinationFile.getPath())) {
+		    		System.out.println("file decrypted");
+		    	}else {
+		    		System.out.println("file not decrypted");
+		    	}
 		    }
 		  }
 	  
@@ -159,6 +159,7 @@ public class SelectPanel extends Panel {
 		    	if(listOfCryptedFiles.getSelectedItem() != null) {
 		    		decrypt.setEnabled(true);
 		    		decryptLabel.setText("Fichier: "+listOfCryptedFiles.getSelectedItem() );
+		    		fileToDecrypt = new File(listOfCryptedFiles.getSelectedItem());
 		    	    frame.repaint();
 		    	    frame.revalidate();
 		    	}
