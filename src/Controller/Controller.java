@@ -23,7 +23,7 @@ public class Controller {
 
 	public Controller() throws SQLException {
 		this.decrypter = new Decrypter();
-		this.decrypter.letsDecrypt();
+		this.decrypter.letsDecrypt(this);
 	}
 	
 	public void wantToConnect(String login, String password) throws SQLException {
@@ -103,6 +103,10 @@ public class Controller {
 		}
 		return null;
 
+	}
+	
+	public Model getModel() {
+		return this.model;
 	}
 
 }
