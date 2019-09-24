@@ -22,8 +22,7 @@ public class Controller {
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
 	public Controller() throws SQLException {
-		this.decrypter = new Decrypter();
-		this.decrypter.letsDecrypt(this);
+		
 	}
 	
 	public void wantToConnect(String login, String password) throws SQLException {
@@ -79,6 +78,8 @@ public class Controller {
 	public void setModelAndView(Model model, View view) {
 		this.model = model;
 		this.view = view;
+		this.decrypter = new Decrypter();
+		this.decrypter.letsDecrypt(this);
 		
 	}
 
