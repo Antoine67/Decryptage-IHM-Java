@@ -35,6 +35,9 @@ public class SelectPanel extends Panel {
 	private JLabel filesLabel = new JLabel("Liste des fichiers cryptés enregistrés",JLabel.CENTER);
 	private JButton refresh = new JButton ("Rafraichir les fichiers");
 	
+	
+
+	
 	final JFileChooser fileChooser = new JFileChooser();
 	
 	List listOfCryptedFiles = new List(5,false);
@@ -70,7 +73,7 @@ public class SelectPanel extends Panel {
 	    
 
 	    
-	    messageDisplayer.setBounds(10,110,380,100 );
+	    messageDisplayer.setBounds(30,150,380,25 );
 	    messageDisplayer.setVisible(false);
 	    
 	    title.setBounds(50,100, 200,25);  
@@ -92,6 +95,8 @@ public class SelectPanel extends Panel {
 	    refresh.addActionListener(new RefreshActionListener());
 	    
 	    decrypt.setEnabled(false);    
+	    
+	    
 	    
 	}
 

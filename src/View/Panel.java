@@ -37,6 +37,7 @@ public class Panel extends JPanel {
 	    this.setBackground(Color.white);
 	    this.setVisible(true); 
 	    this.setLayout(null);
+	    messageDisplayer.setOpaque(true);
 	    
 
 	    

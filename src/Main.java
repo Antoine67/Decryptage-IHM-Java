@@ -14,25 +14,41 @@ public class Main {
 	  Controller controller = new Controller();
 	  
 	  Model model = new Model();
+	  
 	  View view = new View(controller);
-	  controller.setModelAndView(model, view);
+	  
+
+	  //Mot inital
+	  int[]array = model.encrypt("CECI","qw");
+	  
+	  //Crypté
+	  System.out.println(intArrayToString(array));
+	  
+	  //Décrypté
+	  System.out.println(intArrayToString(model.encrypt(intArrayToString(array), "qw")));
+          
+	  
+	  //controller.setModelAndView(model, view);
+	  
+	  
   
   }   
-  
-/*
 
-  private static int[] string2Arr(String str) {
-      String[] sarr = str.split(",");
-      int[] out = new int[sarr.length];
-      for (int i = 0; i < out.length; i++) {
-          out[i] = Integer.valueOf(sarr[i]);
-      }
-      return out;
+  /**
+   * Convert int array to String (ASCII)
+   * "50,50,50,62" to "222<"
+   * @param array
+   * @return
+   */
+  private static String intArrayToString(int[] array) {
+	  StringBuilder str = new StringBuilder();
+	  for(int i=0; i<array.length; i++) {
+		  str.append((char)array[i]);
+	  }
+	  return str.toString();
   }
-*/
   
-  
-  
+   
   
   
   

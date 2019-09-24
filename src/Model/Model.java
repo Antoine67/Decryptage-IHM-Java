@@ -123,35 +123,12 @@ public class Model {
 	 public int[] encrypt(String str, String key) {
 	      int[] output = new int[str.length()];
 	      for(int i = 0; i < str.length(); i++) {
-	          int o = (Integer.valueOf(str.charAt(i)) ^ Integer.valueOf(key.charAt(i % (key.length() )))) + '0';
+	          int o = (Integer.valueOf(str.charAt(i)) ^ Integer.valueOf(key.charAt(i % (key.length() ))));// + '0';
 	          output[i] = o;
 	      }
 	      return output;        
 	  }
 	 
-	 
-	 public String m_crypt(String inputString, String key) {
-                    StringBuilder sb1;
-                    char c1; char c2; char c3; int i; int ii; ii=0;
-
-                    sb1= new StringBuilder();
-                   
-                    for(i=0;i<inputString.length();i++) {
-
-                         c1=inputString.charAt(i);
-                         c2=key.charAt(ii);
-                         c3 = (char)(c1^c2);
-                         sb1.append(c3);
-						 ii++;
-						
-						 if(ii == key.length()) {
-						     ii = 0;
-						 }
-		
-		            }
-                    return sb1.toString();
-	}
-
 	
 
 	/* Composant de mappage de la table personne [Map_P] */

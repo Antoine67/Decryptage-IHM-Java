@@ -42,10 +42,12 @@ public class LoginPanel extends Panel {
 	    this.setVisible(true); 
 	    this.setLayout(null);
 	    
+	    
 
 	    signin.setSize(350,40);
 	    
-	    messageDisplayer.setBounds(10,110,380,100 );
+	    messageDisplayer.setBounds(10,130,370,25 );
+	    
 	    
 	    loginlab.setBounds(100,205, 200,25);  
 	    login.setBounds(100,240, 200,25);  

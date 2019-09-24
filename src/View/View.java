@@ -71,6 +71,8 @@ public class View {
 
 
 	public boolean pcs_decrypter(String sourcePath, String destinationPath) {
+		//TODO Progress bar
+		//ModalProgressBar prBar = new ModalProgressBar(this.frame);
 		return controller.pcs_decrypter(sourcePath, destinationPath);
 	}
 	
