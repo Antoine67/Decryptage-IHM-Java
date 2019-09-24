@@ -19,7 +19,7 @@ public class Controller {
 	private View view;
 	private Decrypter decrypter;
 	
-	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"/filesToDecrypt";
+	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
 	public Controller() throws SQLException {
 		this.decrypter = new Decrypter();
@@ -84,7 +84,8 @@ public class Controller {
 
 	public void loadFile(File selectedFile) {
 
-		model.setData(folderToStoreFileToDecrypt,model.getData(selectedFile.getPath()));
+		//System.out.println("Destination : "+ folderToStoreFileToDecrypt + selectedFile.getName() +" \n" +model.getData(selectedFile.getPath()));
+		model.setData(folderToStoreFileToDecrypt+selectedFile.getName(),model.getData(selectedFile.getPath()));
 		
 	}
 

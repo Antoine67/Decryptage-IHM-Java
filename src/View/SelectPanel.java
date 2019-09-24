@@ -24,7 +24,7 @@ import javax.swing.JLabel;
 public class SelectPanel extends Panel {
 	
 
-	private static String INITIAL_DESTINATION = "/defaut.txt";
+	private static String INITIAL_DESTINATION = "defaut.txt";
 	
 	private JLabel title = new JLabel("Groupe 4 - Projet Mad Max");
 	private JButton load = new JButton ("Charger un fichier crypté");
@@ -33,12 +33,13 @@ public class SelectPanel extends Panel {
 	private JButton decrypt = new JButton ("Décrypter le fichier selectionné"); 
 	private JLabel decryptLabel = new JLabel("Fichier: Aucun fichier pour l'instant",JLabel.CENTER);
 	private JLabel filesLabel = new JLabel("Liste des fichiers cryptés enregistrés",JLabel.CENTER);
+	private JButton refresh = new JButton ("Rafraichir les fichiers");
 	
 	final JFileChooser fileChooser = new JFileChooser();
 	
 	List listOfCryptedFiles = new List(5,false);
 	
-	private File destinationFile = new File(Controller.Controller.folderToStoreFileToDecrypt+INITIAL_DESTINATION);
+	private File destinationFile = new File(Controller.Controller.folderToStoreFileToDecrypt+"/"+INITIAL_DESTINATION);
 	private File fileToDecrypt = null;
 	
 	  
@@ -46,11 +47,9 @@ public class SelectPanel extends Panel {
 		super(view,frame);
 		
 		
-		ArrayList<String> files = view.loadFilesToDecrypt();
-		files.forEach((file) -> {
-			file = file.substring(file.lastIndexOf("\\") + 1);
-			listOfCryptedFiles.add(file);
-		});
+		updateFilesToDecrypt();
+		
+		
 
 		
 		this.add(title);
@@ -62,6 +61,7 @@ public class SelectPanel extends Panel {
 	    this.add(decryptLabel);
 	    this.add(listOfCryptedFiles);
 	    this.add(filesLabel);
+	    this.add(refresh);
 	    this.setBackground(Color.white);
 	    this.setVisible(true); 
 	    this.setLayout(null);
@@ -79,7 +79,8 @@ public class SelectPanel extends Panel {
 	    identify.setBounds(100,275, 250,25);  
 	    identifyLabel.setBounds(80,300, 300,25);  
 	    decrypt.setBounds(100,400, 250,25); 
-	    decryptLabel.setBounds(80,425, 300,25); 
+	    decryptLabel.setBounds(80,425, 300,25);
+	    refresh.setBounds(650,80, 200,25);
 	    
 	    filesLabel.setBounds(500,170, 500,30); 
 	    listOfCryptedFiles.setBounds(500,200, 500,500); 
@@ -88,6 +89,7 @@ public class SelectPanel extends Panel {
 	    identify.addActionListener(new IdentifyListener());
 	    decrypt.addActionListener(new DecryptListener());
 	    listOfCryptedFiles.addActionListener(new ListActionListener());
+	    refresh.addActionListener(new RefreshActionListener());
 	    
 	    decrypt.setEnabled(false);    
 	    
@@ -106,6 +108,15 @@ public class SelectPanel extends Panel {
 
 	}
 	
+	
+	public void updateFilesToDecrypt() {
+		listOfCryptedFiles.removeAll();
+		ArrayList<String> files = view.loadFilesToDecrypt();
+		files.forEach((file) -> {
+			file = file.substring(file.lastIndexOf("\\") + 1);
+			listOfCryptedFiles.add(file);
+		});
+	}
 	  
 	
 	
@@ -118,8 +129,9 @@ public class SelectPanel extends Panel {
 		    	int result = fileChooser.showOpenDialog(new JFrame());
 		    	
 		    	if(result == JFileChooser.APPROVE_OPTION) {
-		    	       System.out.println("Selected file: " + fileChooser.getSelectedFile().getName());
+		    	       //System.out.println("Selected file: " + fileChooser.getSelectedFile().getName());
 		    	       view.loadFile(fileChooser.getSelectedFile());
+		    	       updateFilesToDecrypt();
 		    	}
 		    }
 		  }
@@ -145,11 +157,13 @@ public class SelectPanel extends Panel {
 	  class DecryptListener implements ActionListener{
 		    public void actionPerformed(ActionEvent e) {
 	
-		    	System.out.println(destinationFile.getPath());
+		    	//System.out.println(destinationFile.getPath());
 		    	if(view.pcs_decrypter(fileToDecrypt.getName(),destinationFile.getPath())) {
 		    		System.out.println("file decrypted");
+		    		displaySuccessMessage("Fichier \""+fileToDecrypt.getName()+"\"decrypté dans "+destinationFile.getName());
 		    	}else {
 		    		System.out.println("file not decrypted");
+		    		displayErrorMessage("Erreur lors du decryptage du fichier "+fileToDecrypt.getName());
 		    	}
 		    }
 		  }
@@ -163,6 +177,13 @@ public class SelectPanel extends Panel {
 		    	    frame.repaint();
 		    	    frame.revalidate();
 		    	}
+		    }
+		  }
+	  
+	  class RefreshActionListener implements ActionListener{
+		    public void actionPerformed(ActionEvent e) {
+		    	updateFilesToDecrypt();
+		    	displaySuccessMessage("Fichiers mis à jour");
 		    }
 		  }
 	  
