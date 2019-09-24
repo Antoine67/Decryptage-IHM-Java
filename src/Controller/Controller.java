@@ -71,15 +71,20 @@ public class Controller {
 		textCrypted = model.getData(source_path);
 		
 		//After the decrypter
-		model.setData(destination_path, textUncrypted);
-		return true;
+		 if(decrypter.letsDecrypt(textCrypted)) {
+			 model.setData(destination_path, textUncrypted);
+			 return true;
+		 }else return false;
+		
+		
+		
+		
 	}
 
 	public void setModelAndView(Model model, View view) {
 		this.model = model;
 		this.view = view;
-		this.decrypter = new Decrypter();
-		this.decrypter.letsDecrypt(this);
+		this.decrypter = new Decrypter(this);
 		
 	}
 
