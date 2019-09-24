@@ -1,5 +1,6 @@
 package View;
 
+import java.io.File;
 import java.sql.SQLException;
 
 import javax.swing.JPanel;
@@ -44,7 +45,7 @@ public class View {
 	}
 	
 	public void connectionSuccessful() {
-		
+		this.frame.connectionSuccessful();
 	}
 	
 	public void connectionFailed() {
@@ -59,6 +60,12 @@ public class View {
 	
 	public String getDestinationPath() {
 		return null;
+	}
+
+
+	public void loadFile(File selectedFile) {
+		controller.loadFile(selectedFile);
+		
 	}
 	
 	

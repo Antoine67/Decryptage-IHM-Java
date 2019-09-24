@@ -21,70 +21,26 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Panel extends JPanel {
-	  private TextField login = new TextField("admin");
-	  private TextField password = new TextField("mdp123");
-	  private JLabel loginlab = new JLabel("Login");
-	  private JLabel passwordlab = new JLabel("Password");
-	  private JButton signin = new JButton ("Sign In");
-	  private JLabel messageDisplayer = new JLabel("Enter your creditentials :", JLabel.CENTER);
+	
+	
+	protected JLabel messageDisplayer = new JLabel("Enter your creditentials :", JLabel.CENTER);
 	  
-	  
-	  private View view;
-	private Frame frame;
+	protected View view;
+	protected Frame frame;
 	  
 	public Panel(View view,Frame frame) {
 		this.view = view;
 		this.frame = frame;
 		
-		this.add(loginlab);
-	    this.add(login);
-	    this.add(passwordlab);
-	    this.add(password);
-	    this.add(signin);
 	    this.add(messageDisplayer);
 	    this.setBackground(Color.white);
 	    this.setVisible(true); 
 	    this.setLayout(null);
 	    
 
-	    signin.setSize(350,40);
 	    
 	    messageDisplayer.setBounds(10,110,380,100 );
-	    
-	    loginlab.setBounds(100,205, 200,25);  
-	    login.setBounds(100,240, 200,25);  
-	    
-	    passwordlab.setBounds(100,275, 200,25);  
-	    password.setBounds(100,310, 200,25); 
-	    password.setEchoChar('\u25CF');
-	    
-	    signin.setBounds(100,375, 200,30);  
-	    
-	    signin.addActionListener(new LoginListener());
 	}
-
-
-	public void paintComponent(Graphics g){
-		
-		try {
-		      Image img = ImageIO.read(new File("assets/img/cesi.png"));
-		      g.drawImage(img, 100, 50, this);
-		    } 
-		catch (IOException e) {
-		      e.printStackTrace();
-		    }
-
-	}
-	
-	  
-	
-	
-	  class LoginListener implements ActionListener{
-		    public void actionPerformed(ActionEvent e) {
-		    	view.wantToConnect(login.getText(),password.getText());
-		    }
-		  }
-
 
 
 
