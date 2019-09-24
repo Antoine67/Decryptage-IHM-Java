@@ -12,16 +12,16 @@ public class Decrypter {
         int nombre, quotient, reste, result1, result2;
         String enterNumber;
         char charEnterNumber;
-        String enter = "020f2c084952001e451b0a1c411a27130844164a110b170d";
+        //String enter = controller.getModel().encrypt("ceci est un test", "wfeefsf");
         String bin = "";
         String bin2 = "";
-        String[] binbis = enter.split("");
-        int intArray[] = new int[enter.length()];
+        /*String[] binbis = enter.split("");
+        int intArray[] = new int[enter.length()];*/
         
         
        /* enterNumber = sc.next();
         charEnterNumber = enterNumber.charAt(0);*/
-        for(int z = 0; z < binbis.length; z++) {
+        /*for(int z = 0; z < binbis.length; z++) {
         	bin = "";
         	nombre = (int) binbis[z].charAt(0);
         	quotient = nombre;
@@ -42,7 +42,7 @@ public class Decrypter {
 	            }
 	        }
 	        intArray[z] = Integer.parseInt(envers(bin),2);
-        }
+        }*/
         int nombre2 = 1;
          
         
@@ -76,7 +76,7 @@ public class Decrypter {
              }
              nombre2++;
              
-             System.out.println(controller.getModel().m_crypt(enter, envers(bin2)));
+             System.out.println(controller.getModel().decrypt(controller.getModel().encrypt("ceci est un test", "wfeefsf"), envers(bin2)));
         }
         //result1 = Integer.parseInt(envers(bin),2);
         //result2 = Integer.parseInt(envers(bin2),2);
@@ -98,4 +98,13 @@ public class Decrypter {
         
         return oui;
     }
+	
+	private int[] string2Arr(String str) {
+	      String[] sarr = str.split(",");
+	      int[] out = new int[sarr.length];
+	      for (int i = 0; i < out.length; i++) {
+	          out[i] = Integer.valueOf(sarr[i]);
+	      }
+	      return out;
+	  }
 }

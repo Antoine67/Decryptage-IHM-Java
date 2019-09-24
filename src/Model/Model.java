@@ -115,7 +115,7 @@ public class Model {
 	public String decrypt(int[] data, String key) {
 	      String output = "";        
 	      for(int i = 0; i < data.length; i++) {
-	          output += (char) ((data[i] - 48) ^ (int) key.charAt(i % (key.length() - 1)));
+	          output += (char) ((data[i] - 48) ^ (int) key.charAt(i % (key.length() )));
 	      }
 	      return output;
 	  }
@@ -123,7 +123,7 @@ public class Model {
 	 public int[] encrypt(String str, String key) {
 	      int[] output = new int[str.length()];
 	      for(int i = 0; i < str.length(); i++) {
-	          int o = (Integer.valueOf(str.charAt(i)) ^ Integer.valueOf(key.charAt(i % (key.length() - 1)))) + '0';
+	          int o = (Integer.valueOf(str.charAt(i)) ^ Integer.valueOf(key.charAt(i % (key.length() )))) + '0';
 	          output[i] = o;
 	      }
 	      return output;        
