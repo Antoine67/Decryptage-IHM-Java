@@ -10,6 +10,8 @@ public class ThreadDecrypt extends Thread{
 	  private String clueAboutKey;
 	  private String name;
 	  
+	  private boolean caracterAccepted = true;
+	  
 	  //Temp key of the current thread
 	  String temp_key;
 	private int maxKeyLenght;
@@ -74,11 +76,7 @@ public class ThreadDecrypt extends Thread{
 	        
 	        long temp_key_hexa = beginValue;
 	         
-	        
-	        
-	        
-	        
-	        
+
 	        for(long i = beginValue; i < wantedValue ; i++ ) {
 	        	if( multiThreading.keyFinded == true || multiThreading.shouldStop) {
 	        		return null;
@@ -105,6 +103,11 @@ public class ThreadDecrypt extends Thread{
 	        	 
 	        	 //Temporay key (ASCII)
 	        	 System.out.println(binaryToAscii(temp_key));
+	        	 
+	        	 if(!binaryToAscii(temp_key).matches("^[a-z0-9]+$")){
+	        		 continue;
+	        	 }
+	        	 
 	        	 
 	        	 /*
 	        	 if(binaryToAscii(temp_key).equals("^")) {
