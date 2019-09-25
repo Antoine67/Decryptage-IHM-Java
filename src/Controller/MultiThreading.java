@@ -1,23 +1,53 @@
 package Controller;
 
+import java.util.ArrayList;
+
 public class MultiThreading {
 	Controller controller;
 	int a = 0;
 	boolean keyFinded = false;
-	ThreadDecrypt thread1;
-	ThreadDecrypt thread2;
-	ThreadDecrypt thread3;
-	ThreadDecrypt thread4;
+
+	
+	ArrayList<ThreadDecrypt> threads = new ArrayList<ThreadDecrypt>();
+	
+	private int numberOfThreads;
+	private String textCrypted;
+	private String clueAboutKey;
+	private Decrypter decrypter;
+	
+	private static int MAX_KEY_LENGHT = 12;
+	private int max_number= (int) Math.pow(2,MAX_KEY_LENGHT);
+	
 	
 	public MultiThreading(Controller controller) {
+		
+	}
+
+	public MultiThreading(
+			Controller controller,
+			int numberOfThreads,
+			String textCrypted,
+			String clueAboutKey,
+			Decrypter decrypter) 
+	{
 		this.controller = controller;
-		this.thread1 = new ThreadDecrypt("1", this, 0, 3);
-		this.thread2 = new ThreadDecrypt("2", this, 1000, 3);
-		this.thread3 = new ThreadDecrypt("3", this, 100000, 3);
-		this.thread4 = new ThreadDecrypt("4", this, 10000000, 3);
-		thread1.start();
-		thread2.start();
-		thread3.start();
-		thread4.start();
+		this.numberOfThreads = numberOfThreads;
+		this.textCrypted = textCrypted;
+		this.clueAboutKey = clueAboutKey;
+		this.decrypter = decrypter;
+
+		int part = max_number/numberOfThreads;
+		
+		for(int i=0; i<numberOfThreads; i++) {
+			threads.add(new ThreadDecrypt(
+								Integer.toString(i)
+								, this
+								, part*i
+								, part*(i+1))
+						);
+		}
+		
+		
+		threads.forEach((thr) -> { thr.start(); });
 	}
 }

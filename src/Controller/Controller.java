@@ -91,6 +91,8 @@ public class Controller {
 	
 		
 		textUncrypted = decrypter.letsDecrypt(textCrypted,CLUE_ABOUT_KEY);
+		
+		MultiThreading multiThreading = new MultiThreading(this, 4,textCrypted, CLUE_ABOUT_KEY, decrypter); 
 		 if(textUncrypted != null) {
 			 textUncrypted = DEFAULT_MESSAGE_DECRYPTED + textUncrypted;
 			 model.setData(destination_path, textUncrypted);
