@@ -23,10 +23,13 @@ public class Controller {
 	private Model model;
 	private View view;
 	private Decrypter decrypter;
+	private SelectPanel selectedPane;
 	
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
 	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi école d'ingénieurs \nDécrypté par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
+	
+	private int triedKeys = 0;
 	
 	public Controller() throws SQLException {
 		
@@ -78,18 +81,36 @@ public class Controller {
 		//Get the crypted file
 		textCrypted = model.getData(source_path);
 		
-		//After the decrypter
-		textUncrypted = decrypter.letsDecrypt(textCrypted, selectPane);
+		this.selectedPane = selectPane;
+		triedKeys=0;
+		
+		
+		//launch the decrypter
+	
+		
+		textUncrypted = decrypter.letsDecrypt(textCrypted);
 		 if(textUncrypted != null) {
 			 textUncrypted = DEFAULT_MESSAGE_DECRYPTED + textUncrypted;
 			 model.setData(destination_path, textUncrypted);
 			 return true;
 		 }else return false;
-		
-		
-		
+	
+	}
+	
+	
+	public void setProgressBarState(boolean b) {
+		selectedPane.setProgressBarState(b);
 		
 	}
+
+	public void increaseTriedKey() {
+		triedKeys++;
+		selectedPane.setTriedKeys(triedKeys);
+		
+	}
+	
+	
+	
 
 	public void setModelAndView(Model model, View view) {
 		this.model = model;
@@ -123,6 +144,8 @@ public class Controller {
 	public Model getModel() {
 		return this.model;
 	}
+
+	
 
 }
 

@@ -37,7 +37,7 @@ public class SelectPanel extends Panel {
 	private JLabel filesLabel = new JLabel("Liste des fichiers cryptés enregistrés",JLabel.CENTER);
 	private JButton refresh = new JButton ("Rafraichir les fichiers");
 	
-	private JDialog stateDisplayer = new JDialog(this.frame, "Decryptage en cours...", false);
+	private JDialog stateDisplayer = new JDialog(this.frame, "Decryptage en cours...", true);
 	private JLabel triedKeys = new JLabel();
 	private JButton cancelDecrypt = new JButton("Annuler");
 	JProgressBar progressBar;
@@ -237,16 +237,6 @@ public class SelectPanel extends Panel {
 
 
 	
-	private int triedKeysNumber = 0;
-	public void increaseTriedKey() {
-		triedKeysNumber++;
-		triedKeys.setText("Clés tentées : "+triedKeysNumber);
-		frame.repaint();
-		frame.revalidate();
-		
-	}
-
-
 	private Thread t;
 	public void setProgressBarState(boolean creation) {
 		if(creation) {
@@ -258,7 +248,7 @@ public class SelectPanel extends Panel {
 			      }
 			    });
 			t.start();
-		}else {
+		}/*else {
 			
 			try {
 				//stateDisplayer.;
@@ -267,9 +257,16 @@ public class SelectPanel extends Panel {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 		
 		
+	}
+
+
+	public void setTriedKeys(int triedKeysNumber) {
+		triedKeys.setText("Clés tentées : "+triedKeysNumber);
+		frame.repaint();
+		frame.revalidate();
 	}
 	  
 	  

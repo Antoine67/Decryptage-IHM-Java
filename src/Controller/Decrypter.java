@@ -20,12 +20,12 @@ public class Decrypter {
 	
 	String temp_key ;
 ;
-	public String letsDecrypt(String messageADecrypter, SelectPanel selectPanel){
+	public String letsDecrypt(String messageADecrypter){
 
 		if(messageADecrypter.length() <= 0 ) {
 			return null;
 		}
-		selectPanel.setProgressBarState(true);
+		controller.setProgressBarState(true);
 		messageADecrypter = messageADecrypter.replace("\n", "").replace("\r", "");
 		
 		String crypt = intArrayToString(controller.getModel().encrypt("soit","^"));
@@ -63,7 +63,7 @@ public class Decrypter {
              }
         	 temp_key_hexa++;
         	 
-        	 selectPanel.increaseTriedKey();
+        	 controller.increaseTriedKey();
         	
         	 
              
@@ -91,7 +91,7 @@ public class Decrypter {
             		 intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
              {
             	 //There, the key is considered as correct
-            	 selectPanel.setProgressBarState(false);
+            	 controller.setProgressBarState(false);
             	 System.out.println(intArrayToString(
             			 controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
             	 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
@@ -99,7 +99,7 @@ public class Decrypter {
         } 
         
         //All possibilities have been tried for a key of length 'MAX_KEY_LENGHT' (default : 12)
-        selectPanel.setProgressBarState(false);
+        controller.setProgressBarState(false);
         return null;
         
 	}
