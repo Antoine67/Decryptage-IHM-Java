@@ -12,23 +12,9 @@ import View.SelectPanel;
 
 public class Decrypter {
 	Controller controller;
-	int a = 0;
-	boolean keyFinded = false;
-	ThreadDecrypt thread1;
-	ThreadDecrypt thread2;
-	ThreadDecrypt thread3;
-	ThreadDecrypt thread4;
-	public Decrypter(Controller controller) throws InterruptedException {
+	public Decrypter(Controller controller) {
 		this.controller = controller;
-		this.thread1 = new ThreadDecrypt("1", this, 0, 3000);
-		this.thread2 = new ThreadDecrypt("2", this, 1000, 3);
-		this.thread3 = new ThreadDecrypt("3", this, 100000, 3);
-		this.thread4 = new ThreadDecrypt("4", this, 10000000, 3);
-		thread1.start();
-		thread2.start();
-		thread3.start();
-		thread4.start();
-	    
+
 	}
 	
 	public static int MAX_KEY_LENGHT = 12;
@@ -134,7 +120,7 @@ public class Decrypter {
 		  return str.toString();
 	  }
 	  
-	  public void hello(int a) throws InterruptedException {
+	  /*public void hello(int a) throws InterruptedException {
 		  this.a = a;
 		  this.keyFinded = true;
 		   System.out.println(a);
@@ -142,7 +128,7 @@ public class Decrypter {
 		    System.out.println("statut du thread " + thread2.getName() + " = " + thread2.getState());
 		    System.out.println("statut du thread " + thread3.getName() + " = " + thread3.getState());
 		    System.out.println("statut du thread " + thread4.getName() + " = " + thread4.getState());
-	  }
+	  }*/
 	
 	private Boolean validateKey(String toValidate) {
 		
