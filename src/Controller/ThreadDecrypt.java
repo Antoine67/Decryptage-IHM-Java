@@ -3,8 +3,8 @@ package Controller;
 public class ThreadDecrypt extends Thread{
 	  Thread t;
 	  MultiThreading multiThreading;
-	  int beginValue;
-	  int wantedValue;
+	  long beginValue;
+	  long wantedValue;
 	  private String messageADecrypter;
 	  private Controller controller;
 	  private String clueAboutKey;
@@ -16,15 +16,15 @@ public class ThreadDecrypt extends Thread{
 	
 	
 	  
-	  public ThreadDecrypt(String name, MultiThreading multiThreading, int beginValue, int wantedValue, String messageADecrypter, String clueAboutKey, int maxKeyLenght){
+	  public ThreadDecrypt(String name, MultiThreading multiThreading, long l, long m, String messageADecrypter, String clueAboutKey, int maxKeyLenght){
 	    super(name);
 	    this.name = name;
 	    this.multiThreading = multiThreading;
 	    this.controller = multiThreading.getController();
 	    this.clueAboutKey = clueAboutKey;
 	    this.maxKeyLenght = maxKeyLenght;
-	    this.beginValue = beginValue;
-	    this.wantedValue = wantedValue;
+	    this.beginValue = l;
+	    this.wantedValue = m;
 	    this.messageADecrypter = messageADecrypter;
 	  }
 
@@ -72,7 +72,7 @@ public class ThreadDecrypt extends Thread{
 
 	        temp_key = "";
 	        
-	        int temp_key_hexa = 0;
+	        long temp_key_hexa = beginValue;
 	         
 	        
 	        
@@ -87,7 +87,7 @@ public class ThreadDecrypt extends Thread{
 	        	 
 	       	 
 	        	 
-	        	 temp_key = Integer.toBinaryString(temp_key_hexa);
+	        	 temp_key = Long.toBinaryString(temp_key_hexa);
 	        	 while(temp_key.length()%8 != 0) {
 	            	 temp_key = '0' + temp_key; 
 	             }

@@ -15,11 +15,10 @@ public class MultiThreading {
 	private String textCrypted;
 	private String clueAboutKey;
 	
-	//private ArrayList<Boolean> completedThreads;
 	private boolean[] completedThreads;
 	
 	private static int MAX_KEY_LENGHT = 12;
-	private int max_number= (int) Math.pow(2,MAX_KEY_LENGHT);
+	private long max_number;
 	private String textDecrypted = null;
 
 	public MultiThreading(
@@ -32,21 +31,24 @@ public class MultiThreading {
 		this.numberOfThreads = numberOfThreads;
 		this.textCrypted = textCrypted;
 		this.clueAboutKey = clueAboutKey;
-		
-		//completedThreads =  new ArrayList<Boolean>(numberOfThreads);
-		completedThreads = new boolean[numberOfThreads];
 
-		int part = max_number/numberOfThreads;
+		completedThreads = new boolean[numberOfThreads];
+		
+		max_number = (long) Math.pow(Math.pow(2,8),MAX_KEY_LENGHT - clueAboutKey.length());
+		System.out.println(max_number);
+
+		long part = max_number/numberOfThreads ;
 		
 		for(int i=0; i<numberOfThreads; i++) {
+			System.out.println("Thread "+i+" "+part*i+" à "+part*(i+1));
 			threads.add(new ThreadDecrypt(
 								Integer.toString(i)
 								, this
 								, part*i
 								, part*(i+1)
 								, textCrypted
-								,clueAboutKey
-								,MAX_KEY_LENGHT)
+								, clueAboutKey
+								, MAX_KEY_LENGHT)
 						);
 		}
 		
@@ -70,10 +72,9 @@ public class MultiThreading {
 		
 		if(decryptedText != null) {
 			textDecrypted  = decryptedText;
+			stopThread();
 		}
 		
-		System.out.println(threadId);
-		//completedThreads.add(threadId, true);
 		completedThreads[threadId] = true;
 		
 		for(int i=0; i<numberOfThreads; i++) {
