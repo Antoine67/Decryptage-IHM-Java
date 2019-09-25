@@ -154,6 +154,7 @@ public class Decrypter {
 				return false;
 			}else {
 				System.out.println("Word found:"+toTry[e]+"\nKey:"+temp_key);
+				controller.addWordFound(toTry[e],temp_key);
 			}
 		}
 		return true;

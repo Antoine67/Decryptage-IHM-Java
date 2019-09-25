@@ -109,6 +109,10 @@ public class Controller {
 		
 	}
 	
+	public void addWordFound(String word, String key) {
+		selectedPane.addWordFound(word, key);
+	}
+	
 	
 	
 
@@ -144,6 +148,8 @@ public class Controller {
 	public Model getModel() {
 		return this.model;
 	}
+
+
 
 	
 

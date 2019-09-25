@@ -132,6 +132,7 @@ public class SelectPanel extends Panel {
 			listOfCryptedFiles.add(file);
 		});
 	}
+	
 	  
 	
 	
@@ -231,8 +232,11 @@ public class SelectPanel extends Panel {
 
 
 	public void setTriedKeys(int triedKeysNumber) {
-
 		triedKeys.setText("Clés essayées: "+Integer.toString(triedKeysNumber));
+	}
+	
+	public void addWordFound(String word, String key) {
+		wordsList.add("Mot: "+word+" - Clé: "+key);
 	}
 	
 	
@@ -257,6 +261,7 @@ public class SelectPanel extends Panel {
 
 	
 	private JLabel triedKeys = new JLabel();
+	private List wordsList = new List();
 	public void createProgressBarModal(ActionEvent evt) {
 	      SwingWorker<Void, Void> mySwingWorker = new SwingWorker<Void, Void>(){
 	         @Override
@@ -294,13 +299,22 @@ public class SelectPanel extends Panel {
 	      progressBar.setIndeterminate(true);
 	      JPanel panel = new JPanel(new BorderLayout());
 	      
-	      panel.add(new JLabel("Decryptage en cours..."), BorderLayout.NORTH);
-	      panel.add(progressBar, BorderLayout.CENTER);
+	      wordsList.removeAll();
+	     
+
+	      panel.add(progressBar, BorderLayout.NORTH);
 	      panel.add(triedKeys, BorderLayout.SOUTH);
 	      
+	      
+	      JPanel panelWords = new JPanel(new BorderLayout());
+	      panelWords.add(new JLabel("Mots trouvés - clés associées"), BorderLayout.NORTH );
+	      panelWords.add(wordsList, BorderLayout.CENTER);
+	      
+	      panel.add(panelWords,BorderLayout.CENTER);
+	      
 	      stateDisplayer.add(panel);
-	      //stateDisplayer.pack();
-	      stateDisplayer.setSize(500,100);
+	      
+	      stateDisplayer.setSize(500,500);
 	      stateDisplayer.setResizable(false);
 	      stateDisplayer.setLocationRelativeTo(win);
 	      stateDisplayer.setVisible(true);
