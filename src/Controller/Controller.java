@@ -90,14 +90,17 @@ public class Controller {
 		//launch the decrypter
 	
 		
-		textUncrypted = decrypter.letsDecrypt(textCrypted,CLUE_ABOUT_KEY);
+		//textUncrypted = decrypter.letsDecrypt(textCrypted,CLUE_ABOUT_KEY);
 		
-		MultiThreading multiThreading = new MultiThreading(this, 4,textCrypted, CLUE_ABOUT_KEY, decrypter); 
+		MultiThreading multiThreading = new MultiThreading(this, 4,textCrypted, CLUE_ABOUT_KEY); 
+		multiThreading.launch();
+		/*
 		 if(textUncrypted != null) {
 			 textUncrypted = DEFAULT_MESSAGE_DECRYPTED + textUncrypted;
 			 model.setData(destination_path, textUncrypted);
 			 return true;
-		 }else return false;
+		 }else return false;*/
+		return false;
 	
 	}
 	
