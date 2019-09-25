@@ -20,7 +20,7 @@ public class Decrypter {
 	ThreadDecrypt thread4;
 	public Decrypter(Controller controller) throws InterruptedException {
 		this.controller = controller;
-		this.thread1 = new ThreadDecrypt("1", this, 0, 3);
+		this.thread1 = new ThreadDecrypt("1", this, 0, 3000);
 		this.thread2 = new ThreadDecrypt("2", this, 1000, 3);
 		this.thread3 = new ThreadDecrypt("3", this, 100000, 3);
 		this.thread4 = new ThreadDecrypt("4", this, 10000000, 3);
@@ -35,7 +35,7 @@ public class Decrypter {
 	
 	String temp_key ;
 ;
-	public String letsDecrypt(String messageADecrypter){
+	public String letsDecrypt(String messageADecrypter, String clueAboutKey){
 
 		if(messageADecrypter.length() <= 0 ) {
 			return null;
@@ -69,7 +69,8 @@ public class Decrypter {
         
         
         for(long i = 0; i < Math.pow(256 /* 8 in one byte -> 2^8 */, MAX_KEY_LENGHT)  ; i++ ) {
-        	 temp_key = "";
+        	 temp_key = clueAboutKey+"";
+        	 
        	 
         	 
         	 temp_key = Integer.toBinaryString(temp_key_hexa);

@@ -25,9 +25,11 @@ public class Controller {
 	private Decrypter decrypter;
 	private SelectPanel selectedPane;
 	
+	
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
 	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi école d'ingénieurs \nDécrypté par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
+	private static String CLUE_ABOUT_KEY = "";
 	
 	private int triedKeys = 0;
 	
@@ -88,7 +90,7 @@ public class Controller {
 		//launch the decrypter
 	
 		
-		textUncrypted = decrypter.letsDecrypt(textCrypted);
+		textUncrypted = decrypter.letsDecrypt(textCrypted,CLUE_ABOUT_KEY);
 		 if(textUncrypted != null) {
 			 textUncrypted = DEFAULT_MESSAGE_DECRYPTED + textUncrypted;
 			 model.setData(destination_path, textUncrypted);

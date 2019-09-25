@@ -22,7 +22,6 @@ public class ThreadDecrypt extends Thread{
 	    	try {
 				controller.hello(beginValue);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	    }
