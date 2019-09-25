@@ -1,6 +1,14 @@
 package Controller;
 
+import java.awt.Component;
 import java.math.BigInteger;
+
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+
+import View.SelectPanel;
 
 public class Decrypter {
 	Controller controller;
@@ -12,12 +20,12 @@ public class Decrypter {
 	
 	String temp_key ;
 ;
-	public boolean letsDecrypt(String messageADecrypter){
+	public String letsDecrypt(String messageADecrypter, SelectPanel selectPanel){
 
 		if(messageADecrypter.length() <= 0 ) {
-			return false;
+			return null;
 		}
-		
+		selectPanel.setProgressBarState(true);
 		messageADecrypter = messageADecrypter.replace("\n", "").replace("\r", "");
 		
 		String crypt = intArrayToString(controller.getModel().encrypt("soit","^"));
@@ -35,16 +43,17 @@ public class Decrypter {
 		
 		System.out.println("Message à décrypter : "+messageADecrypter);
 		
-        int quotient, reste;
-        
-        //int[] enter = messageADecrypter;
 
         temp_key = "";
         
         int temp_key_hexa = 0;
          
         
-        for(long i = 0; i < 1000 /*Math.pow(256 /* 8 in one byte -> 2^8 , MAX_KEY_LENGHT) */ ; i++ ) {
+        
+        
+        
+        
+        for(long i = 0; i < Math.pow(256 /* 8 in one byte -> 2^8 */, MAX_KEY_LENGHT)  ; i++ ) {
         	 temp_key = "";
        	 
         	 
@@ -53,6 +62,10 @@ public class Decrypter {
             	 temp_key = '0' + temp_key; 
              }
         	 temp_key_hexa++;
+        	 
+        	 selectPanel.increaseTriedKey();
+        	
+        	 
              
              //Decrypted data with current temp key
              //System.out.println(intArrayToString(controller.getModel().encrypt(intArrayToString(enter), binaryToAscii(envers(temp_key)))));
@@ -78,32 +91,18 @@ public class Decrypter {
             		 intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
              {
             	 //There, the key is considered as correct
+            	 selectPanel.setProgressBarState(false);
             	 System.out.println(intArrayToString(
             			 controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
-            	 return true;
+            	 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
              }
         } 
         
         //All possibilities have been tried for a key of length 'MAX_KEY_LENGHT' (default : 12)
-        return false;
+        selectPanel.setProgressBarState(false);
+        return null;
         
 	}
-	/*
-	public String envers(String base)
-    {
-        int longueur = base.length() - 1;
-        String oui = "";
-        int n = 0;
-         
-        while (n<=longueur)
-        {
-            oui = oui + base.charAt(longueur-n);
-            n++;
-        }
-        
-        return oui;
-    }*/
-	
 	  /**
 	   * Convert int array to String (ASCII)
 	   * "50,50,50,62" to "222<"

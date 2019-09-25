@@ -15,10 +15,12 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 
 
 public class SelectPanel extends Panel {
@@ -34,6 +36,11 @@ public class SelectPanel extends Panel {
 	private JLabel decryptLabel = new JLabel("Fichier: Aucun fichier pour l'instant",JLabel.CENTER);
 	private JLabel filesLabel = new JLabel("Liste des fichiers cryptés enregistrés",JLabel.CENTER);
 	private JButton refresh = new JButton ("Rafraichir les fichiers");
+	
+	private JDialog stateDisplayer = new JDialog(this.frame, "Decryptage en cours...", false);
+	private JLabel triedKeys = new JLabel();
+	private JButton cancelDecrypt = new JButton("Annuler");
+	JProgressBar progressBar;
 	
 	
 
@@ -70,7 +77,18 @@ public class SelectPanel extends Panel {
 	    this.setLayout(null);
 	    
 	   
+	    progressBar = new JProgressBar(0, 100);
+	    stateDisplayer.add(BorderLayout.NORTH, progressBar);
+	    stateDisplayer.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+	    stateDisplayer.setSize(150, 75);
+	    stateDisplayer.setLocationRelativeTo(frame);
 	    
+	    triedKeys.setText("Clés tentées : 0");
+
+	    stateDisplayer.add(BorderLayout.CENTER, triedKeys);
+	    stateDisplayer.add(BorderLayout.SOUTH,cancelDecrypt);
+	    stateDisplayer.setSize(300,150);
+	    stateDisplayer.setResizable(false);
 
 	    
 	    messageDisplayer.setBounds(30,150,380,25 );
@@ -159,11 +177,14 @@ public class SelectPanel extends Panel {
 		    }
 		  }
 	  
+	  
+	  SelectPanel that = this;
 	  class DecryptListener implements ActionListener{
 		    public void actionPerformed(ActionEvent e) {
 	
+		    	//stateDisplayer.setVisible(true);
 		    	//System.out.println(destinationFile.getPath());
-		    	if(view.pcs_decrypter(fileToDecrypt.getName(),destinationFile.getPath())) {
+		    	if(view.pcs_decrypter(fileToDecrypt.getName(),destinationFile.getPath(), that)) {
 		    		System.out.println("file decrypted");
 		    		displaySuccessMessage("Fichier \""+fileToDecrypt.getName()+"\"decrypté dans "+destinationFile.getName());
 		    	}else {
@@ -212,6 +233,43 @@ public class SelectPanel extends Panel {
 		messageDisplayer.setVisible(true);
 		frame.repaint();
 		frame.revalidate();
+	}
+
+
+	
+	private int triedKeysNumber = 0;
+	public void increaseTriedKey() {
+		triedKeysNumber++;
+		triedKeys.setText("Clés tentées : "+triedKeysNumber);
+		frame.repaint();
+		frame.revalidate();
+		
+	}
+
+
+	private Thread t;
+	public void setProgressBarState(boolean creation) {
+		if(creation) {
+			
+			//stateDisplayer.setVisible(true);
+			t = new Thread(new Runnable() {
+			      public void run() {
+			    	  stateDisplayer.setVisible(true);
+			      }
+			    });
+			t.start();
+		}else {
+			
+			try {
+				//stateDisplayer.;
+				stateDisplayer.setVisible(false);
+				t.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 	}
 	  
 	  

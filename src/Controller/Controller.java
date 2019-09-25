@@ -11,7 +11,12 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JProgressBar;
+
 import Model.Model;
+import View.SelectPanel;
 import View.View;
 
 public class Controller {
@@ -21,6 +26,8 @@ public class Controller {
 	
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
+	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi école d'ingénieurs \nDécrypté par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
+	
 	public Controller() throws SQLException {
 		
 	}
@@ -41,13 +48,13 @@ public class Controller {
 		}
 	}
 	
-	public void wantToDecript() {
+	public void wantToDecript(SelectPanel selectPane) {
 		//Tell to the user that the file is decrypted
-		if(pcs_decrypter(view.getSourcePath(), view.getDestinationPath())) {
-			view.displayMessage("Succes", view.SUCCESS);
+		if(pcs_decrypter(view.getSourcePath(), view.getDestinationPath(),selectPane)) {
+			view.displayMessage("Success", View.SUCCESS);
 		}
 		else {
-			view.displayMessage("Failed", view.FAIL);
+			view.displayMessage("Failed", View.FAIL);
 		}
 	}
 	
@@ -61,17 +68,20 @@ public class Controller {
 		}
 	}
 	
-	public Boolean pcs_decrypter(String source_path, String destination_path) {
+	public Boolean pcs_decrypter(String source_path, String destination_path, SelectPanel selectPane) {
 		
 		source_path = folderToStoreFileToDecrypt + "\\"+ source_path;
 		
-		String textCrypted = new String();
-		String textUncrypted = new String();
+		String textCrypted;
+		String textUncrypted;
+		
 		//Get the crypted file
 		textCrypted = model.getData(source_path);
 		
 		//After the decrypter
-		 if(decrypter.letsDecrypt(textCrypted)) {
+		textUncrypted = decrypter.letsDecrypt(textCrypted, selectPane);
+		 if(textUncrypted != null) {
+			 textUncrypted = DEFAULT_MESSAGE_DECRYPTED + textUncrypted;
 			 model.setData(destination_path, textUncrypted);
 			 return true;
 		 }else return false;
@@ -101,7 +111,6 @@ public class Controller {
 			ArrayList<String> result = (ArrayList<String>) walk.filter(Files::isRegularFile)
 					.map(x -> x.toString()).collect(Collectors.toList());
 
-			//result.forEach(System.out::println);
 			return result;
 
 		} catch (IOException e) {

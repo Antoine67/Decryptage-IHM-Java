@@ -4,7 +4,10 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 import Controller.Controller;
 
@@ -70,10 +73,10 @@ public class View {
 	}
 
 
-	public boolean pcs_decrypter(String sourcePath, String destinationPath) {
+	public boolean pcs_decrypter(String sourcePath, String destinationPath,SelectPanel selectPane) {
 		//TODO Progress bar
 		//ModalProgressBar prBar = new ModalProgressBar(this.frame);
-		return controller.pcs_decrypter(sourcePath, destinationPath);
+		return controller.pcs_decrypter(sourcePath, destinationPath,selectPane);
 	}
 	
 	

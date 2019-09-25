@@ -5,12 +5,15 @@ import java.awt.BorderLayout;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 public class ModalProgressBar {
 	
-  public ModalProgressBar(Frame frame) {
+  public ModalProgressBar(Frame currentFrame) {
 
+	  	JPanel frame = currentFrame.getCurrentPanel();
+	  	
 	    JLabel jl = new JLabel();
 	    jl.setText("Count : 0");
 
@@ -18,7 +21,7 @@ public class ModalProgressBar {
 	   
 	    frame.setVisible(true);
 
-	    final JDialog dlg = new JDialog(frame, "Progress Dialog", true);
+	    final JDialog dlg = new JDialog(currentFrame, "Progress Dialog", true);
 	    JProgressBar dpb = new JProgressBar(0, 500);
 	    dlg.add(BorderLayout.CENTER, dpb);
 	    dlg.add(BorderLayout.NORTH, new JLabel("Progress..."));
@@ -33,7 +36,7 @@ public class ModalProgressBar {
 	    });
 	    t.start();
 	    for (int i = 0; i <= 500; i++) {
-	    	System.out.println("i");
+	    	System.out.println(i);
 	      jl.setText("Count : " + i);
 	      dpb.setValue(i);
 	      if(dpb.getValue() == 500){
