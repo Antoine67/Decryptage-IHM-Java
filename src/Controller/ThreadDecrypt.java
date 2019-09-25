@@ -21,12 +21,12 @@ public class ThreadDecrypt extends Thread{
 	    if(controller.keyFinded == false) {
 	    	try {
 				controller.hello(beginValue);
-		    	System.out.println("tets");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	    }
+		   System.out.println("tets");
 	  }
 
 	  public void setThread(Thread t){
