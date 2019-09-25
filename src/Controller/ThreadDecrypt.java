@@ -1,10 +1,12 @@
 package Controller;
 
+import java.math.BigInteger;
+
 public class ThreadDecrypt extends Thread{
 	  Thread t;
 	  MultiThreading multiThreading;
-	  long beginValue;
-	  long wantedValue;
+	  BigInteger beginValue;
+	  BigInteger wantedValue;
 	  private String messageADecrypter;
 	  private Controller controller;
 	  private String clueAboutKey;
@@ -14,19 +16,19 @@ public class ThreadDecrypt extends Thread{
 	  
 	  //Temp key of the current thread
 	  String temp_key;
-	private int maxKeyLenght;
+	  private int maxKeyLenght;
 	
 	
 	  
-	  public ThreadDecrypt(String name, MultiThreading multiThreading, long l, long m, String messageADecrypter, String clueAboutKey, int maxKeyLenght){
+	  public ThreadDecrypt(String name, MultiThreading multiThreading, BigInteger beginValue, BigInteger wantedValue, String messageADecrypter, String clueAboutKey, int maxKeyLenght){
 	    super(name);
 	    this.name = name;
 	    this.multiThreading = multiThreading;
 	    this.controller = multiThreading.getController();
 	    this.clueAboutKey = clueAboutKey;
 	    this.maxKeyLenght = maxKeyLenght;
-	    this.beginValue = l;
-	    this.wantedValue = m;
+	    this.beginValue = beginValue;
+	    this.wantedValue = wantedValue;
 	    this.messageADecrypter = messageADecrypter;
 	  }
 
@@ -56,11 +58,12 @@ public class ThreadDecrypt extends Thread{
 			controller.setProgressBarState(true);
 			messageADecrypter = messageADecrypter.replace("\n", "").replace("\r", "");
 			
-			String crypt = intArrayToString(controller.getModel().encrypt("soit","^"));
-			System.out.println("Exemple : 'soit' avec une clé '^' donne crypté :"
+			
+			String crypt = intArrayToString(controller.getModel().encrypt("bonjour je m appelle loic","^^^^"));
+			System.out.println("Exemple : 'bonjour je m'appelle Loic' avec une clé '^^^^' donne crypté :"
 					+ crypt );
 			
-			int[] decrypt = controller.getModel().encrypt(crypt, "^");
+			int[] decrypt = controller.getModel().encrypt(crypt, "^^^^");
 			System.out.println("Soit après decryptage :"
 					+intArrayToString(decrypt));
 			
@@ -74,10 +77,10 @@ public class ThreadDecrypt extends Thread{
 
 	        temp_key = "";
 	        
-	        long temp_key_hexa = beginValue;
-	         
+	        BigInteger temp_key_hexa = beginValue;	         
 
-	        for(long i = beginValue; i < wantedValue ; i++ ) {
+	        
+	        for(BigInteger i = beginValue; wantedValue.compareTo(i) > 0 ; i=i.add(BigInteger.ONE) ) {
 	        	if( multiThreading.keyFinded == true || multiThreading.shouldStop) {
 	        		return null;
 	        	}
@@ -85,24 +88,29 @@ public class ThreadDecrypt extends Thread{
 	        	 
 	       	 
 	        	 
-	        	 temp_key = Long.toBinaryString(temp_key_hexa);
+	        	 temp_key = temp_key_hexa.toString(2);
+
 	        	 while(temp_key.length()%8 != 0) {
 	            	 temp_key = '0' + temp_key; 
 	             }
-	        	 temp_key_hexa++;
+	        	 temp_key_hexa = temp_key_hexa.add(BigInteger.ONE);
 	        	 
 	        	 controller.increaseTriedKey();
 	        	
 	        	 
 	             
+	        	 
+	        	 //System.out.println(intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))) + " avec " +temp_key);
+	        	 
+	        	 
 	             //Decrypted data with current temp key
-	             //System.out.println(intArrayToString(controller.getModel().encrypt(intArrayToString(enter), binaryToAscii(envers(temp_key)))));
+	             //System.out.println(intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
 	             
 	             //Temporary key (binary)
 	             //System.out.println("\n"+temp_key);
 	        	 
 	        	 //Temporay key (ASCII)
-	        	 System.out.println(binaryToAscii(temp_key));
+	        	 //System.out.println(binaryToAscii(temp_key));
 	        	 
 	        	 if(!binaryToAscii(temp_key).matches("^[a-z0-9]+$")){
 	        		 continue;
@@ -136,13 +144,6 @@ public class ThreadDecrypt extends Thread{
 	        return null;
 	        
 	  }
-	  
-	  
-	  
-	  
-	  
-	  
-	  
 	  
 	  
 
