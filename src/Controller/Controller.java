@@ -112,7 +112,7 @@ public class Controller {
 	
 	
 
-	public void setModelAndView(Model model, View view) {
+	public void setModelAndView(Model model, View view) throws InterruptedException {
 		this.model = model;
 		this.view = view;
 		this.decrypter = new Decrypter(this);
