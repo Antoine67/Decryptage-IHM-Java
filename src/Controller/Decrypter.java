@@ -119,7 +119,7 @@ public class Decrypter {
 	  }
 	
 	private Boolean validateKey(String toValidate) {
-		System.out.println(toValidate);
+		
 		if(toValidate == null || toValidate.length() ==0) return false;
 		
 		String[] toTry = toValidate.split(" ");
