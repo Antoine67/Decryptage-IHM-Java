@@ -39,7 +39,8 @@ public class MultiThreading {
 								Integer.toString(i)
 								, this
 								, part*i
-								, part*(i+1))
+								, part*(i+1)
+								, textCrypted)
 						);
 		}
 		
@@ -52,5 +53,9 @@ public class MultiThreading {
 	
 	public void stopThread() {
 		
+	}
+	
+	public Controller getController() {
+		return this.controller;
 	}
 }
