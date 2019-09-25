@@ -2,10 +2,10 @@ package Controller;
 
 public class ThreadDecrypt extends Thread{
 	  Thread t;
-	  Decrypter controller;
+	  MultiThreading controller;
 	  int beginValue;
 	  int wantedValue;
-	  public ThreadDecrypt(String name, Decrypter controller, int beginValue, int wantedValue){
+	  public ThreadDecrypt(String name, MultiThreading controller, int beginValue, int wantedValue){
 	    super(name);
 	    this.controller = controller;
 	    this.beginValue = beginValue;
@@ -19,12 +19,6 @@ public class ThreadDecrypt extends Thread{
 	    	beginValue++;
 	    }
 	    if(controller.keyFinded == false) {
-	    	try {
-				controller.hello(beginValue);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 	    }
 		   System.out.println("tets");
 	  }
