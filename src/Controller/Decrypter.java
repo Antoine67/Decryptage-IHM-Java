@@ -19,8 +19,8 @@ public class Decrypter {
 	
 	public static int MAX_KEY_LENGHT = 12;
 	
-	String temp_key ;
-;
+	String temp_key;
+
 	public String letsDecrypt(String messageADecrypter, String clueAboutKey){
 
 		if(messageADecrypter.length() <= 0 ) {

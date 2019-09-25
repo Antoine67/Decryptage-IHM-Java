@@ -2,26 +2,25 @@ package Controller;
 
 public class ThreadDecrypt extends Thread{
 	  Thread t;
-	  MultiThreading controller;
+	  MultiThreading multiThreading;
 	  int beginValue;
 	  int wantedValue;
-	  public ThreadDecrypt(String name, MultiThreading controller, int beginValue, int wantedValue){
+	  public ThreadDecrypt(String name, MultiThreading multiThreading, int beginValue, int wantedValue){
 	    super(name);
-	    this.controller = controller;
+	    this.multiThreading = multiThreading;
 	    this.beginValue = beginValue;
 	    this.wantedValue = wantedValue;
 	  }
 
 
 	  public void run(){
-		  System.out.println("dwad");
-	    while(beginValue != wantedValue && controller.keyFinded == false) {
+	    while(beginValue != wantedValue && multiThreading.keyFinded == false && !multiThreading.shouldStop) {
 	    	beginValue++;
 	    }
-	    if(controller.keyFinded == false) {
-
+	    if(multiThreading.keyFinded == false) {
+	    	
 	    }
-		   System.out.println("tets");
+		   System.out.println("");
 	  }
 
 	  public void setThread(Thread t){

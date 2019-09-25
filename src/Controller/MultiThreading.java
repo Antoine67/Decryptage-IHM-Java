@@ -6,6 +6,7 @@ public class MultiThreading {
 	Controller controller;
 	int a = 0;
 	boolean keyFinded = false;
+	boolean shouldStop = false;
 
 	
 	ArrayList<ThreadDecrypt> threads = new ArrayList<ThreadDecrypt>();
@@ -17,11 +18,6 @@ public class MultiThreading {
 	
 	private static int MAX_KEY_LENGHT = 12;
 	private int max_number= (int) Math.pow(2,MAX_KEY_LENGHT);
-	
-	
-	public MultiThreading(Controller controller) {
-		
-	}
 
 	public MultiThreading(
 			Controller controller,
@@ -48,6 +44,13 @@ public class MultiThreading {
 		}
 		
 		
+	}
+	
+	public void launch(){
 		threads.forEach((thr) -> { thr.start(); });
+	}
+	
+	public void stopThread() {
+		
 	}
 }
