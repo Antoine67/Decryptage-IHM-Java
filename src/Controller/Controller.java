@@ -51,7 +51,7 @@ public class Controller {
 		}
 	}
 	
-	public void wantToDecript(SelectPanel selectPane) {
+	public void wantToDecrypt(SelectPanel selectPane) {
 		//Tell to the user that the file is decrypted
 		if(pcs_decrypter(view.getSourcePath(), view.getDestinationPath(),selectPane)) {
 			view.displayMessage("Success", View.SUCCESS);
