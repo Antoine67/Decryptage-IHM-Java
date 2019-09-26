@@ -123,7 +123,6 @@ public class Model {
 	*/
 	
 	 public int[] encrypt(String str, String key) {
-		 System.out.println("str:"+str+" key:"+key);
 	      int[] output = new int[str.length()];
 	      for(int i = 0; i < str.length(); i++) {
 	          int o = (Integer.valueOf(str.charAt(i)) ^ Integer.valueOf(key.charAt(i % (key.length() ))));// + '0';

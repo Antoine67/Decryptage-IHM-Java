@@ -89,10 +89,6 @@ public class Controller {
 		triedKeys=0;
 		
 		
-		//launch the decrypter
-	
-		
-		//textUncrypted = decrypter.letsDecrypt(textCrypted,CLUE_ABOUT_KEY);
 		
 		this.multiThreading = new MultiThreading(this, 2,textCrypted, CLUE_ABOUT_KEY); 
 		textUncrypted = multiThreading.launch();
