@@ -72,32 +72,70 @@ public class ThreadDecrypt2 extends Thread{
 		  
 		  for(int i = 0; i<values.length; i++) {//each byte
 			  int[] temp_key_array = new int[values.length];
-			  for(int a =0; a<=i; a++) {//each byte we are modifying
-				  temp_key_array[temp_key_array.length - a -2] += 1;
-				  for(int j = 97; j < 123; j++) {//each alpha char
-					  temp_key_array[temp_key_array.length - a -1] = j;
-					  
-					  
-					  
-					  
-					  //System.out.println(i +" a:"+a+" j:"+j);
-					  
-					  for(int w=0; w<temp_key_array.length;w++) {
-						  System.out.print(temp_key_array[w]+";");
-					  }System.out.println("");
-					  
-					  /*controller.increaseTriedKey();
-			             if(validateKey(
-			            		 intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
-			             {
-			            	 //There, the key is considered as correct
-			            	 controller.setProgressBarState(false);
-			            	 System.out.println(intArrayToString(
-			            			 controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
-			            	 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
-			             }*/
+			  int a = 0;
+			  int b = 0;
+			  for(int c = 0; c < 10000; c++) {
+				  for(int aj = 97; aj < 123; aj++) {
+					  for(int bj = 97; bj < 123; bj++) {
+						  for(int cj = 97; cj < 123; cj++) {
+							  for(int dj = 97; cj < 123; cj++) {
+								  for(int ej = 97; ej < 123; ej++) {
+									  for(int fj = 97; fj < 123; fj++) {
+										  for(int gj = 97; gj < 123; gj++) {
+											  for(int j = 97; j < 123; j++) {//each alpha char
+												  temp_key_array[temp_key_array.length - a -1] = j;
+												  
+												  
+												  //System.out.println(i +" a:"+a+" j:"+j);
+												  String tempo = "";
+												  for(int w=0; w<temp_key_array.length;w++) {
+													  //System.out.print(temp_key_array[w]+";");
+													  tempo += (char) temp_key_array[w];
+												  }System.out.println("");
+												  temp_key = clueAboutKey + tempo;
+												  System.out.println(temp_key);
+												  
+												  controller.increaseTriedKey();
+										             if(validateKey(
+										            		 intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
+										             {
+										            	 //There, the key is considered as correct
+										            	 controller.setProgressBarState(false);
+										            	 System.out.println(intArrayToString(
+										            			 controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
+										            	 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
+										             }
+												  
+											  }
+
+											  temp_key_array[temp_key_array.length - a - 2] = gj;
+										  }
+										  temp_key_array[temp_key_array.length - a - 3] = fj;
+									  }
+									  temp_key_array[temp_key_array.length - a - 4] = ej;
+								  }
+								  temp_key_array[temp_key_array.length - a - 5] = dj;
+							  }
+							  temp_key_array[temp_key_array.length - a - 6] = cj;
+						  }
+						  temp_key_array[temp_key_array.length - a - 7] = bj;
+					  }
+					  temp_key_array[temp_key_array.length - a - 8] = aj;
 				  }
+				  
+				  for(int cj = 97; cj < 123; cj++) {
+					  
+				  }
+				  for(int dj = 97; dj < 123; dj++) {
+					  
+				  }
+				  
+				  
+				  
+				  
 			  }
+				 
+			  
 			  
 		  }
 		  
