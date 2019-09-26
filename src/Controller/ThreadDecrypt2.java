@@ -72,12 +72,21 @@ public class ThreadDecrypt2 extends Thread{
 		  
 		  for(int i = 0; i<values.length; i++) {//each byte
 			  int[] temp_key_array = new int[values.length];
-			  for(int a =0; a<i; a++) {//each byte we are modifying
-				  for(int j = 0; j < 122-97; j++) {//each alpha char
-					  temp_key_array[temp_key_array.length - a] = j;
+			  for(int a =0; a<=i; a++) {//each byte we are modifying
+				  temp_key_array[temp_key_array.length - a -2] += 1;
+				  for(int j = 97; j < 123; j++) {//each alpha char
+					  temp_key_array[temp_key_array.length - a -1] = j;
 					  
-					  System.out.println(temp_key_array);
-					  controller.increaseTriedKey();
+					  
+					  
+					  
+					  //System.out.println(i +" a:"+a+" j:"+j);
+					  
+					  for(int w=0; w<temp_key_array.length;w++) {
+						  System.out.print(temp_key_array[w]+";");
+					  }System.out.println("");
+					  
+					  /*controller.increaseTriedKey();
 			             if(validateKey(
 			            		 intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
 			             {
@@ -86,7 +95,7 @@ public class ThreadDecrypt2 extends Thread{
 			            	 System.out.println(intArrayToString(
 			            			 controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
 			            	 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
-			             }
+			             }*/
 				  }
 			  }
 			  
@@ -273,7 +282,7 @@ public class ThreadDecrypt2 extends Thread{
 		public String binaryToAscii(String binary) {
 			
 			while(binary.length()%8 != 0) {
-				binary = '0' + temp_key; 
+				binary = '0' + binary; 
             }
 			
 			String tmp =""; int tmp_addition;

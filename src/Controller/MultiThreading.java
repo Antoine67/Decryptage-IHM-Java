@@ -10,7 +10,7 @@ public class MultiThreading {
 	boolean shouldStop = false;
 
 	
-	ArrayList<ThreadDecrypt> threads = new ArrayList<ThreadDecrypt>();
+	ArrayList<ThreadDecrypt2> threads = new ArrayList<ThreadDecrypt2>();
 	
 	private int numberOfThreads;
 	private String textCrypted;
@@ -49,7 +49,7 @@ public class MultiThreading {
 		
 		for(int i=0; i<numberOfThreads; i++) {
 			System.out.println("Thread "+i+" "+part.multiply(BigInteger.valueOf(i))+" à "+part.multiply(BigInteger.valueOf(i+1)));
-			threads.add(new ThreadDecrypt(
+			threads.add(new ThreadDecrypt2(
 								Integer.toString(i)
 								, this
 								, part.multiply(BigInteger.valueOf(i))
