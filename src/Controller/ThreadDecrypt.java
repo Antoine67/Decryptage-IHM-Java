@@ -55,11 +55,17 @@ public class ThreadDecrypt extends Thread{
 		  if(messageADecrypter.length() <= 0 ) {
 				return null;
 			}
+		  
+		  
+		  if(messageADecrypter.matches("^[01]+$")) {
+			  messageADecrypter = binaryToAscii(messageADecrypter);
+		  }
+		  
 			controller.setProgressBarState(true);
 			messageADecrypter = messageADecrypter.replace("\n", "").replace("\r", "");
 			
 			
-			String crypt = intArrayToString(controller.getModel().encrypt("bonjour je m appelle loic","^^^^"));
+			/*String crypt = intArrayToString(controller.getModel().encrypt("bonjour je m appelle loic","^^^^"));
 			System.out.println("Exemple : 'bonjour je m'appelle Loic' avec une clé '^^^^' donne crypté :"
 					+ crypt );
 			
@@ -70,7 +76,7 @@ public class ThreadDecrypt extends Thread{
 			
 			for(int a=0; a<crypt.length() ;a++) {
 				System.out.println((int)crypt.charAt(a));
-			}
+			}*/
 			
 			System.out.println("Message à décrypter : "+messageADecrypter);
 			
@@ -80,25 +86,29 @@ public class ThreadDecrypt extends Thread{
 	        BigInteger temp_key_hexa = beginValue;	         
 
 	        
+	        
+	        
 	        for(BigInteger i = beginValue; wantedValue.compareTo(i) > 0 ; i=i.add(BigInteger.ONE) ) {
 	        	if( multiThreading.keyFinded == true || multiThreading.shouldStop) {
 	        		return null;
 	        	}
-	        	 temp_key = clueAboutKey+"";
-	        	 
-	       	 
-	        	 
-	        	 temp_key = temp_key_hexa.toString(2);
-
-	        	 while(temp_key.length()%8 != 0) {
-	            	 temp_key = '0' + temp_key; 
-	             }
-	        	 temp_key_hexa = temp_key_hexa.add(BigInteger.ONE);
-	        	 
-	        	 controller.increaseTriedKey();
 	        	
+	        	
+	        	
+	        	
+	        	 temp_key_hexa = i;
 	        	 
-	             
+	        	 temp_key= binaryToAscii(temp_key_hexa.toString(2));
+	        	 
+	        	 
+	        	 temp_key = clueAboutKey+temp_key;
+	        	 
+	        	 
+	    
+	        	 /*while(temp_key.length()%8 != 0) {
+	            	 temp_key = '0' + temp_key; 
+	             }*/
+	        	 
 	        	 
 	        	 //System.out.println(intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))) + " avec " +temp_key);
 	        	 
@@ -107,14 +117,18 @@ public class ThreadDecrypt extends Thread{
 	             //System.out.println(intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
 	             
 	             //Temporary key (binary)
-	             //System.out.println("\n"+temp_key);
+	             //System.out.println(temp_key);
+	        	 
+	        	 
 	        	 
 	        	 //Temporay key (ASCII)
 	        	 //System.out.println(binaryToAscii(temp_key));
 	        	 
-	        	 if(!binaryToAscii(temp_key).matches("^[a-z0-9]+$")){
+	        	
+	        	 if(!temp_key.matches("^[a-z]+$")){
 	        		 continue;
 	        	 }
+	        	 controller.increaseTriedKey();
 	        	 
 	        	 
 	        	 /*
@@ -129,13 +143,13 @@ public class ThreadDecrypt extends Thread{
 	             
 	             
 	             if(validateKey(
-	            		 intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
+	            		 intArrayToString(controller.getModel().encrypt(messageADecrypter, temp_key)))) 
 	             {
 	            	 //There, the key is considered as correct
 	            	 controller.setProgressBarState(false);
 	            	 System.out.println(intArrayToString(
-	            			 controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
-	            	 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
+	            			 controller.getModel().encrypt(messageADecrypter, temp_key)));
+	            	 return intArrayToString(controller.getModel().encrypt(messageADecrypter, temp_key));
 	             }
 	        } 
 	        
@@ -196,6 +210,12 @@ public class ThreadDecrypt extends Thread{
 		}
 		
 		public String binaryToAscii(String binary) {
+			
+			//System.out.println("toAscii: " +binary);
+			
+			while(binary.length()%8 != 0) {
+				binary = '0' + binary; 
+            }
 			
 			String tmp =""; int tmp_addition;
 			while(binary.length() > 0) {

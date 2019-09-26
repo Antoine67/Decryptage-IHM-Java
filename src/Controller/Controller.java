@@ -29,7 +29,7 @@ public class Controller {
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
 	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi école d'ingénieurs \nDécrypté par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
-	private static String CLUE_ABOUT_KEY = "";
+	private static String CLUE_ABOUT_KEY = "awqp";
 	
 	private int triedKeys = 0;
 	
