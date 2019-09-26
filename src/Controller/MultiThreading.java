@@ -37,8 +37,8 @@ public class MultiThreading {
 		completedThreads = new boolean[numberOfThreads];
 		
 		
-		BigInteger number_byte = BigInteger.valueOf(256);
-		max_number = (BigInteger) number_byte.pow(MAX_KEY_LENGHT - clueAboutKey.length());
+		BigInteger available_values = BigInteger.valueOf(27); //alphabetic values
+		max_number = (BigInteger) available_values.pow(MAX_KEY_LENGHT - clueAboutKey.length());
 		System.out.println(max_number);
 		
 
@@ -56,8 +56,10 @@ public class MultiThreading {
 								, part.multiply(BigInteger.valueOf(i+1))*/
 								, textCrypted
 								, clueAboutKey
-								, MAX_KEY_LENGHT,
-								i%2 == 0)
+								, MAX_KEY_LENGHT
+								,i%2 == 0
+								,part.multiply(BigInteger.valueOf(i))
+								,part.multiply(BigInteger.valueOf(i+1)))
 						);
 		}
 		

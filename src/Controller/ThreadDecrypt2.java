@@ -15,11 +15,14 @@ public class ThreadDecrypt2 extends Thread{
 	  //Temp key of the current thread
 	  String temp_key;
 	  private int maxKeyLenght;
-	private boolean startFromBigger;
+	  private boolean startFromBigger;
+	  
+	  private BigInteger maxValue;
+	  private BigInteger startValue;
 	
 	
 	  
-	  public ThreadDecrypt2(String name, MultiThreading multiThreading, String messageADecrypter, String clueAboutKey, int maxKeyLenght, boolean startFromBigger){
+	  public ThreadDecrypt2(String name, MultiThreading multiThreading, String messageADecrypter, String clueAboutKey, int maxKeyLenght, boolean startFromBigger, BigInteger startValue, BigInteger maxValue){
 	    super(name);
 	    this.name = name;
 	    this.multiThreading = multiThreading;
@@ -28,21 +31,18 @@ public class ThreadDecrypt2 extends Thread{
 	    this.maxKeyLenght = maxKeyLenght;
 	    this.messageADecrypter = messageADecrypter;
 	    this.startFromBigger = startFromBigger;
+	    
+	    this.startValue = startValue;
+	    this.maxValue = maxValue;
+	    
+	    
 	  }
 
 
 	  public void run(){
-		  
-		  
+		  	  
 		multiThreading.setThreadDecrypt(letsDecrypt(startFromBigger), name);  
 		
-	    /*while(beginValue != wantedValue && multiThreading.keyFinded == false && !multiThreading.shouldStop) {
-	    	beginValue++;
-	    }
-	    if(multiThreading.keyFinded == false) {
-	    	
-	    }*/
-
 	  }
 	  
 	  
