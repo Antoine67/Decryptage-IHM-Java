@@ -30,22 +30,6 @@ public class Model {
 
 			dictionary = cutAndStoreAsArray(getData("assets/dictionnaireDeMots.txt"), "\n");
 
-			/*
-			 * Exemple d'utilisation:
-			 * 
-			 * 
-			 * //Chercher en BDD la correspondance du login/password
-			 * System.out.println(databaseDAO.selectIDbyLoginPassword("admin","mdp123"));
-			 * 
-			 * 
-			 * //Manip fichiers System.out.println(getData(".gitignore"));
-			 * setData("testSetData","blabla");
-			 * 
-			 * //Trouver un mot dans le dico de mots
-			 * System.out.println(selectWord("abaisse-laangue"));
-			 * 
-			 */
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -94,18 +78,6 @@ public class Model {
 
 	}
 
-	/* Composant de décryptage [Decrypt] */
-	/*
-	 * public String decrypt(String data, String key) { StringBuilder sb = new
-	 * StringBuilder(); for(int i = 0; i < data.length(); i++)
-	 * sb.append((char)(data.charAt(i) ^ key.charAt(i % (key.length()))));
-	 * return(sb.toString()); }
-	 * 
-	 * public String decrypt(int[] data, String key) { String output = ""; for(int i
-	 * = 0; i < data.length; i++) { output += (char) ((data[i] - 48) ^ (int)
-	 * key.charAt(i % (key.length() ))); } return output; }
-	 */
-
 	public int[] encrypt(String str, String key) {
 		int[] output = new int[str.length()];
 		for (int i = 0; i < str.length(); i++) {
@@ -121,14 +93,6 @@ public class Model {
 		return databaseDAO.selectIDbyLoginPassword(login, password);
 	}
 
-	/* Composant de mappage de la table dictionnaire [Map_Dic] */
-
-	/**
-	 * Check if a given word is in the french dictionary
-	 * 
-	 * @param word to find in the dictionary
-	 * @return the word if found, null in others case
-	 */
 	public String selectWord(String word) {
 		if (dictionary.contains(word)) {
 			return word;
@@ -136,13 +100,6 @@ public class Model {
 			return null;
 	}
 
-	/**
-	 * Cut a string and store it as an array
-	 * 
-	 * @param str     initial string
-	 * @param divider the divider between two words
-	 * @return
-	 */
 	private ArrayList<String> cutAndStoreAsArray(String str, String divider) {
 		String array[];
 		str = str.replace("\r", ""); /* suppression des retours chariots */
