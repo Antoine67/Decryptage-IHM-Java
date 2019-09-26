@@ -5,8 +5,6 @@ import java.math.BigInteger;
 public class ThreadDecrypt2 extends Thread{
 	  Thread t;
 	  MultiThreading multiThreading;
-	  BigInteger beginValue;
-	  BigInteger wantedValue;
 	  private String messageADecrypter;
 	  private Controller controller;
 	  private String clueAboutKey;
@@ -17,26 +15,26 @@ public class ThreadDecrypt2 extends Thread{
 	  //Temp key of the current thread
 	  String temp_key;
 	  private int maxKeyLenght;
+	private boolean startFromBigger;
 	
 	
 	  
-	  public ThreadDecrypt2(String name, MultiThreading multiThreading, BigInteger beginValue, BigInteger wantedValue, String messageADecrypter, String clueAboutKey, int maxKeyLenght){
+	  public ThreadDecrypt2(String name, MultiThreading multiThreading, String messageADecrypter, String clueAboutKey, int maxKeyLenght, boolean startFromBigger){
 	    super(name);
 	    this.name = name;
 	    this.multiThreading = multiThreading;
 	    this.controller = multiThreading.getController();
 	    this.clueAboutKey = clueAboutKey;
 	    this.maxKeyLenght = maxKeyLenght;
-	    this.beginValue = beginValue;
-	    this.wantedValue = wantedValue;
 	    this.messageADecrypter = messageADecrypter;
+	    this.startFromBigger = startFromBigger;
 	  }
 
 
 	  public void run(){
 		  
 		  
-		multiThreading.setThreadDecrypt(letsDecrypt(), name);  
+		multiThreading.setThreadDecrypt(letsDecrypt(startFromBigger), name);  
 		
 	    /*while(beginValue != wantedValue && multiThreading.keyFinded == false && !multiThreading.shouldStop) {
 	    	beginValue++;
@@ -48,228 +46,108 @@ public class ThreadDecrypt2 extends Thread{
 	  }
 	  
 	  
-	  int[] values = new int[] {97,97,97,97,97,97,97,97};
+	  int[] values;// = new int[] {97,97,97,97,97,97,97,97};
 	  
-	  public String letsDecrypt() {
+	  public String letsDecrypt(boolean startFromBigger) {
+		  
+		  values = new int[maxKeyLenght - clueAboutKey.length()];
+		  
+		  for (int v=0; v<values.length ; v++) {
+			  if(!startFromBigger) values[v] = 97;
+			  else  values[v] = 122;
+			  
+		  }
 		  
 		  
 		  System.out.println("Message à décrypter : "+messageADecrypter);
-		  
-		  if(messageADecrypter.length() <= 0 ) {
-				return null;
-			}
-		  
-		  
-		  if(messageADecrypter.matches("^[01]+$")) {
-			  messageADecrypter = binaryToAscii(messageADecrypter);
-		  }
-		  
 
-		  controller.setProgressBarState(true);
-		  messageADecrypter = messageADecrypter.replace("\n", "").replace("\r", "");
-		  
-		  
-		  
-		  for(int i = 0; i<values.length; i++) {//each byte
-			  int[] temp_key_array = new int[values.length];
-			  int a = 0;
-			  int b = 0;
-			  for(int c = 0; c < 10000; c++) {
-				  for(int aj = 97; aj < 123; aj++) {
-					  for(int bj = 97; bj < 123; bj++) {
-						  for(int cj = 97; cj < 123; cj++) {
-							  for(int dj = 97; cj < 123; cj++) {
-								  for(int ej = 97; ej < 123; ej++) {
-									  for(int fj = 97; fj < 123; fj++) {
-										  for(int gj = 97; gj < 123; gj++) {
-											  for(int j = 97; j < 123; j++) {//each alpha char
-												  temp_key_array[temp_key_array.length - a -1] = j;
-												  
-												  
-												  //System.out.println(i +" a:"+a+" j:"+j);
-												  String tempo = "";
-												  for(int w=0; w<temp_key_array.length;w++) {
-													  //System.out.print(temp_key_array[w]+";");
-													  tempo += (char) temp_key_array[w];
-												  }System.out.println("");
-												  temp_key = clueAboutKey + tempo;
-												  System.out.println(temp_key);
-												  
-												  controller.increaseTriedKey();
-										             if(validateKey(
-										            		 intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
-										             {
-										            	 //There, the key is considered as correct
-										            	 controller.setProgressBarState(false);
-										            	 System.out.println(intArrayToString(
-										            			 controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
-										            	 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
-										             }
-												  
-											  }
+		  if( !startFromBigger ) {
+			  while(values[0] < 122) {  //decrypt  while first byte isn't completed
+				  increments(values);	
 
-											  temp_key_array[temp_key_array.length - a - 2] = gj;
-										  }
-										  temp_key_array[temp_key_array.length - a - 3] = fj;
-									  }
-									  temp_key_array[temp_key_array.length - a - 4] = ej;
-								  }
-								  temp_key_array[temp_key_array.length - a - 5] = dj;
-							  }
-							  temp_key_array[temp_key_array.length - a - 6] = cj;
-						  }
-						  temp_key_array[temp_key_array.length - a - 7] = bj;
-					  }
-					  temp_key_array[temp_key_array.length - a - 8] = aj;
-				  }
-				  
-				  for(int cj = 97; cj < 123; cj++) {
-					  
-				  }
-				  for(int dj = 97; dj < 123; dj++) {
-					  
-				  }
-				  
-				  
-				  
-				  
+				  String value = checkValues();
+	              if(value != null) {
+	            	  return value;
+	              }
 			  }
-				 
-			  
-			  
+		  }else {
+			  while(values[values.length-1] > 97) {  //decrypt  while first byte isn't completed
+				  decrements(values);	
+
+				  String value = checkValues();
+	              if(value != null) {
+	            	  return value;
+	              }
+			  }
 		  }
+		  
 		  
 		  return null;
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-			
-			
-			/*
-			String crypt = intArrayToString(controller.getModel().encrypt("bonjour je m appelle loic","^^^^"));
-			System.out.println("Exemple : 'bonjour je m'appelle Loic' avec une clé '^^^^' donne crypté :"
-					+ crypt );
-			
-			int[] decrypt = controller.getModel().encrypt(crypt, "^^^^");
-			System.out.println("Soit après decryptage :"
-					+intArrayToString(decrypt));
-			
-			
-			for(int a=0; a<crypt.length() ;a++) {
-				System.out.println((int)crypt.charAt(a));
-			}*/
-			
-			
-			
-/*
-	        temp_key = "";
-	        
-	        BigInteger temp_key_hexa = beginValue;	         
-
-	        
-	        for(BigInteger i = beginValue; wantedValue.compareTo(i) > 0 ; i=i.add(BigInteger.ONE) ) {
-	        	if( multiThreading.keyFinded == true || multiThreading.shouldStop) {
-	        		return null;
-	        	}
-	        	 temp_key = clueAboutKey+"";
-	        	 
-	       	 
-	        	 
-	        	 temp_key = temp_key_hexa.toString(2);
-
-	        	 while(temp_key.length()%8 != 0) {
-	            	 temp_key = '0' + temp_key; 
-	             }
-	        	 temp_key_hexa = temp_key_hexa.add(BigInteger.ONE);
-	        	 
-	        	 
-	        	
-	        	 
-	             
-	        	 
-	        	 //System.out.println(intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))) + " avec " +temp_key);
-	        	 
-	        	 
-	             //Decrypted data with current temp key
-	             //System.out.println(intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
-	             
-	             //Temporary key (binary)
-	             //System.out.println(temp_key);
-	        	 
-	        	 //Temporay key (ASCII)
-	        	 System.out.println(binaryToAscii(temp_key));
-	        	 
-	        	 if(!binaryToAscii(temp_key).matches("^[a-z]+$")){
-	        		 continue;
-	        	 }
-	        	 
-	        	 controller.increaseTriedKey();
-	        	 
-	        	 
-	        	 
-	        	 if(binaryToAscii(temp_key).equals("^")) {
-	        		 System.out.println(messageADecrypter +" --> "+
-	        				 intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
-	        		 return true;
-	        	 }
-
-	             
-	 
-	             
-	             
-	             if(validateKey(
-	            		 intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
-	             {
-	            	 //There, the key is considered as correct
-	            	 controller.setProgressBarState(false);
-	            	 System.out.println(intArrayToString(
-	            			 controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
-	            	 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
-	             }
-	        } 
-	        
-	        //All possibilities have been tried for a key of length 'MAX_KEY_LENGHT' (default : 12)
-	        controller.setProgressBarState(false);
-	        return null;*/
-	        
 	  }
-	  
-	  
+	  private String checkValues() {
+		  String tempo = "";
+          for(int w=0; w<values.length;w++) {
+              //System.out.print(temp_key_array[w]+";");
+              tempo += (char) values[w];
+          }//System.out.println("");
+          
+          temp_key = clueAboutKey + tempo;
+          System.out.println("Thread n°"+this.getName()+" -> " + temp_key);
 
-	  public void setThread(Thread t){
+          controller.increaseTriedKey();
+             if(validateKey(
+                     intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
+             {
+                 //There, the key is considered as correct
+                 controller.setProgressBarState(false);
+                 System.out.println(intArrayToString(
+                         controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
+                 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
+             }
+          return null;
+		
+	}
+
+
+	private void decrements(int[] array) {
+		  for( int i = 0; i< array.length; i++) {
+			  if(array[i]<=97) {
+				  array[i] = 122;
+				  
+			  }else {
+				  array[i]-=1;
+				  break;
+ 			  }
+		  }  
+		  //afficher(array);
+	}
+
+
+	public void increments(int[] array) {
+		  for( int i = 0; i< array.length; i++) {
+			  if(array[array.length - i -1]>=122) {
+				  array[array.length - i -1] = 97;
+
+			  }else {
+				  array[array.length - i -1]+=1;
+				  break;
+ 			  }
+		  }
+		  
+		  //afficher(array);
+	  }
+		  
+	  
+	  private void afficher(int[] array) {
+		  for( int i = 0; i< array.length; i++) {
+			  System.out.print(array[i]+";");
+		  }
+		  System.out.println("");
+		
+	}
+
+
+	public void setThread(Thread t){
 	    this.t = t;
 	  }
 	  
@@ -306,7 +184,7 @@ public class ThreadDecrypt2 extends Thread{
 			
 			String[] toTry = toValidate.split(" ");
 			for(int e = 0; e < toTry.length; e++) {
-				if(!toTry[e].matches("^[a-z0-9]+$")) { return false;} //Only alpha numeric char, except majs "^[a-zA-Z0-9]+$"
+				//if(!toTry[e].matches("^[a-z0-9]+$")) { return false;} //Only alpha numeric char, except majs "^[a-zA-Z0-9]+$"
 				if(controller.getModel().selectWord(toTry[e]) == null) {
 					return false;
 				}else {

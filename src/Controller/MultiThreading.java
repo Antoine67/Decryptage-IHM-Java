@@ -51,12 +51,13 @@ public class MultiThreading {
 			System.out.println("Thread "+i+" "+part.multiply(BigInteger.valueOf(i))+" à "+part.multiply(BigInteger.valueOf(i+1)));
 			threads.add(new ThreadDecrypt2(
 								Integer.toString(i)
-								, this
+								, this/*
 								, part.multiply(BigInteger.valueOf(i))
-								, part.multiply(BigInteger.valueOf(i+1))
+								, part.multiply(BigInteger.valueOf(i+1))*/
 								, textCrypted
 								, clueAboutKey
-								, MAX_KEY_LENGHT)
+								, MAX_KEY_LENGHT,
+								i%2 == 0)
 						);
 		}
 		
