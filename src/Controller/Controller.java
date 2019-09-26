@@ -29,7 +29,8 @@ public class Controller {
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
 	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi école d'ingénieurs \nDécrypté par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
-	private static String CLUE_ABOUT_KEY = "awqp";
+	private static String CLUE_ABOUT_KEY = "awqpmndfgte";
+	// Clé finale trouvée : awqpmndfgtej
 	
 	private int triedKeys = 0;
 	private MultiThreading multiThreading;
@@ -160,6 +161,15 @@ public class Controller {
 	public Model getModel() {
 		return this.model;
 	}
+
+	public boolean decryptWithKey(String key, String source_path, String path) {
+		
+		source_path = folderToStoreFileToDecrypt + "\\"+ source_path;
+		String toDecryptData = model.getData(source_path);
+		model.setData(path, ThreadDecrypt2.intArrayToString(model.encrypt(toDecryptData, key)));
+		return true;
+	}
+
 
 
 

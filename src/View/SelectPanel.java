@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.List;
+import java.awt.TextField;
 import java.awt.Window;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
@@ -50,6 +51,11 @@ public class SelectPanel extends Panel {
 	private JLabel filesLabel = new JLabel("Liste des fichiers cryptés enregistrés",JLabel.CENTER);
 	private JButton refresh = new JButton ("Rafraichir les fichiers");
 	
+	private JButton decryptWithKeyButton = new JButton ("Décrypter avec une clé spécifique");
+	private TextField customKey = new TextField("awqpmndfgtej");
+	
+	private JButton decryptWithFrequency = new JButton ("Décrypter à l'aide de la fréquence d'apparition");
+	
 		
 
 	
@@ -80,6 +86,9 @@ public class SelectPanel extends Panel {
 	    this.add(listOfCryptedFiles);
 	    this.add(filesLabel);
 	    this.add(refresh);
+	    this.add(decryptWithKeyButton);
+	    this.add(customKey);
+	    this.add(decryptWithFrequency);
 	    this.setBackground(Color.white);
 	    this.setVisible(true); 
 	    this.setLayout(null);
@@ -96,6 +105,11 @@ public class SelectPanel extends Panel {
 	    identifyLabel.setBounds(80,300, 300,25);  
 	    decrypt.setBounds(100,400, 250,25); 
 	    decryptLabel.setBounds(80,425, 300,25);
+	    decryptWithFrequency.setBounds(80,500, 300,25);
+	    decryptWithKeyButton.setBounds(80,550, 300,25);
+	    customKey.setBounds(80,585, 300,25);
+	    
+	    
 	    refresh.setBounds(650,80, 200,25);
 	    
 	    filesLabel.setBounds(500,170, 500,30); 
@@ -106,8 +120,13 @@ public class SelectPanel extends Panel {
 	    decrypt.addActionListener(new DecryptListener());
 	    listOfCryptedFiles.addActionListener(new ListActionListener());
 	    refresh.addActionListener(new RefreshActionListener());
+	    decryptWithFrequency.addActionListener(new DecryptFrequencyActionListener());
+	    decryptWithKeyButton.addActionListener(new DecryptWithKeyActionListener());
 	    
-	    decrypt.setEnabled(false);    
+	    decrypt.setEnabled(false); 
+	    decryptWithKeyButton.setEnabled(false); 
+	    decryptWithFrequency.setEnabled(false); 
+	    
 	    
 	    
 	    
@@ -190,6 +209,8 @@ public class SelectPanel extends Panel {
 		    public void actionPerformed(ActionEvent e) {
 		    	if(listOfCryptedFiles.getSelectedItem() != null) {
 		    		decrypt.setEnabled(true);
+		    		decryptWithKeyButton.setEnabled(true); 
+		    		decryptWithFrequency.setEnabled(true); 
 		    		decryptLabel.setText("Fichier: "+listOfCryptedFiles.getSelectedItem() );
 		    		fileToDecrypt = new File(listOfCryptedFiles.getSelectedItem());
 		    	    frame.repaint();
@@ -204,6 +225,26 @@ public class SelectPanel extends Panel {
 		    	displaySuccessMessage("Fichiers mis à jour");
 		    }
 	  }
+	  
+	  class DecryptWithKeyActionListener implements ActionListener{
+		    public void actionPerformed(ActionEvent e) {
+		    	if(view.decryptWithKey(customKey.getText(), fileToDecrypt.getName(),destinationFile.getPath())) {
+		    		displaySuccessMessage("Fichier \""+fileToDecrypt.getName()+"\"decrypté dans "+destinationFile.getName());
+		    	}else {
+		    		displayErrorMessage("Erreur");
+		    	}
+		    }
+	  }
+	  
+	  class DecryptFrequencyActionListener implements ActionListener{
+		    public void actionPerformed(ActionEvent e) {
+		    	
+		    }
+	  }
+	  
+	  
+	  
+	  
 	  
 	  
 

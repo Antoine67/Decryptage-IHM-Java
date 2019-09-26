@@ -1,6 +1,7 @@
 package Controller;
 
 import java.math.BigInteger;
+import java.text.Normalizer;
 
 public class ThreadDecrypt2 extends Thread{
 	  Thread t;
@@ -17,8 +18,8 @@ public class ThreadDecrypt2 extends Thread{
 	  private int maxKeyLenght;
 	  private boolean startFromBigger;
 	  
-	  private BigInteger maxValue;
-	  private BigInteger startValue;
+	  private int[] maxValue;
+	  private int[] startValue;
 	
 	
 	  
@@ -32,16 +33,21 @@ public class ThreadDecrypt2 extends Thread{
 	    this.messageADecrypter = messageADecrypter;
 	    this.startFromBigger = startFromBigger;
 	    
-	    this.startValue = startValue;
-	    this.maxValue = maxValue;
+	    this.startValue = bigIntegerToIntArray(startValue);
+	    this.maxValue = bigIntegerToIntArray(maxValue);
 	    
 	    
+	  }
+	  
+	  public int[] bigIntegerToIntArray(BigInteger integer) {
+		  return null;
 	  }
 
 
 	  public void run(){
 		  	  
-		multiThreading.setThreadDecrypt(letsDecrypt(startFromBigger), name);  
+		//System.out.println(validateKey("Ce n'est pas le bon fichier! Il faut chercher ailleurs."));
+		multiThreading.setThreadDecrypt( letsDecrypt(startFromBigger), name);  
 		
 	  }
 	  
@@ -54,7 +60,7 @@ public class ThreadDecrypt2 extends Thread{
 		  
 		  for (int v=0; v<values.length ; v++) {
 			  if(!startFromBigger) values[v] = 97;
-			  else  values[v] = 122;
+			  else  values[v] = 123;
 			  
 		  }
 		  
@@ -92,17 +98,17 @@ public class ThreadDecrypt2 extends Thread{
           }//System.out.println("");
           
           temp_key = clueAboutKey + tempo;
-          System.out.println("Thread n°"+this.getName()+" -> " + temp_key);
+          //System.out.println("Thread n°"+this.getName()+" -> " + temp_key);
 
           controller.increaseTriedKey();
              if(validateKey(
-                     intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))))) 
+                     intArrayToString(controller.getModel().encrypt(messageADecrypter, temp_key)))) 
              {
                  //There, the key is considered as correct
                  controller.setProgressBarState(false);
                  System.out.println(intArrayToString(
-                         controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key))));
-                 return intArrayToString(controller.getModel().encrypt(messageADecrypter, binaryToAscii(temp_key)));
+                         controller.getModel().encrypt(messageADecrypter, temp_key)));
+                 return intArrayToString(controller.getModel().encrypt(messageADecrypter, temp_key));
              }
           return null;
 		
@@ -159,7 +165,7 @@ public class ThreadDecrypt2 extends Thread{
 		   * @param array
 		   * @return
 		   */
-		  private String intArrayToString(int[] array) {
+		  public static String intArrayToString(int[] array) {
 			  StringBuilder str = new StringBuilder();
 			  for(int i=0; i<array.length; i++) {
 				  //str.append((char)array[i]);
@@ -168,28 +174,39 @@ public class ThreadDecrypt2 extends Thread{
 			  return str.toString();
 		  }
 		  
-		  /*public void hello(int a) throws InterruptedException {
-			  this.a = a;
-			  this.keyFinded = true;
-			   System.out.println(a);
-			    System.out.println("statut du thread " + thread1.getName() + " = " + thread1.getState());
-			    System.out.println("statut du thread " + thread2.getName() + " = " + thread2.getState());
-			    System.out.println("statut du thread " + thread3.getName() + " = " + thread3.getState());
-			    System.out.println("statut du thread " + thread4.getName() + " = " + thread4.getState());
-		  }*/
-		
+
+		  
+		private int conseqWords = 0;
 		private Boolean validateKey(String toValidate) {
 			
 			if(toValidate == null || toValidate.length() ==0) return false;
+			toValidate = toValidate.replace(","," ");
+			toValidate = toValidate.replace(".","");
+			toValidate = toValidate.replace("!","");
+			toValidate = toValidate.replace("?","");
+
+			toValidate = toValidate.replace("'"," ");
+			toValidate = toValidate.replace("  "," ");
 			
+
+			toValidate = stripAccents(toValidate);
+			toValidate = toValidate.toLowerCase();
 			String[] toTry = toValidate.split(" ");
+			
+			System.out.println(toValidate);
+			
 			for(int e = 0; e < toTry.length; e++) {
 				//if(!toTry[e].matches("^[a-z0-9]+$")) { return false;} //Only alpha numeric char, except majs "^[a-zA-Z0-9]+$"
 				if(controller.getModel().selectWord(toTry[e]) == null) {
+					conseqWords = 0;
 					return false;
-				}else {
+				}
+				else if(conseqWords > 5) {
 					System.out.println("Word found:"+toTry[e]+"\nKey:"+temp_key);
 					controller.addWordFound(toTry[e],temp_key);
+					return true;
+				}else {
+					conseqWords++;
 				}
 			}
 			return true;
@@ -225,5 +242,12 @@ public class ThreadDecrypt2 extends Thread{
 				array[i] = (int) str.charAt(i);
 			}
 			return array;
+		}
+		
+		public String stripAccents(String s) 
+		{
+		    s = Normalizer.normalize(s, Normalizer.Form.NFD);
+		    s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+		    return s;
 		}
 }

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import Controller.Controller;
+import View.SelectPanel.DecryptWithKeyActionListener;
 
 public class View {
 	private Controller controller;
@@ -74,8 +75,6 @@ public class View {
 
 
 	public boolean pcs_decrypter(String sourcePath, String destinationPath,SelectPanel selectPane) {
-		//TODO Progress bar
-		//ModalProgressBar prBar = new ModalProgressBar(this.frame);
 		return controller.pcs_decrypter(sourcePath, destinationPath,selectPane);
 	}
 	
@@ -88,6 +87,12 @@ public class View {
 	public void stopAllThreads() {
 		System.out.println("sould stop threads");
 		controller.stopAllThreads();
+		
+	}
+
+
+	public boolean decryptWithKey(String key, String toDecrypt, String path	) {
+		return controller.decryptWithKey(key, toDecrypt, path);
 		
 	}
 	

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -75,8 +76,8 @@ public class Model {
 
 		StringBuilder str = new StringBuilder();
 		
-		
-        try (BufferedReader br = Files.newBufferedReader(Paths.get(path))) {
+
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(path),Charset.forName("ISO-8859-1"))) {
 
             String line;
             while ((line = br.readLine()) != null) {
@@ -122,6 +123,7 @@ public class Model {
 	*/
 	
 	 public int[] encrypt(String str, String key) {
+		 System.out.println("str:"+str+" key:"+key);
 	      int[] output = new int[str.length()];
 	      for(int i = 0; i < str.length(); i++) {
 	          int o = (Integer.valueOf(str.charAt(i)) ^ Integer.valueOf(key.charAt(i % (key.length() ))));// + '0';
