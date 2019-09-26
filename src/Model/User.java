@@ -22,11 +22,11 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-	
+
 	@Override
 	public String toString() {
-		return this.id+") User: "+this.login +" - password:"+this.password;
-		
+		return this.id + ") User: " + this.login + " - password:" + this.password;
+
 	}
-	
+
 }
