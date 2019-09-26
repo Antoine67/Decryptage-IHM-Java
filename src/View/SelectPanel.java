@@ -11,6 +11,9 @@ import java.awt.Window;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -281,6 +284,22 @@ public class SelectPanel extends Panel {
 
 	      Window win = SwingUtilities.getWindowAncestor((AbstractButton)evt.getSource());
 	      final JDialog stateDisplayer = new JDialog(win, "Decryptage en cours...", ModalityType.APPLICATION_MODAL);
+	      
+	      stateDisplayer.addComponentListener(new ComponentListener () {
+	    	  public void componentHidden(ComponentEvent e) {
+	    		  view.stopAllThreads();
+	    	    }
+
+			@Override
+			public void componentMoved(ComponentEvent arg0) {}
+
+			@Override
+			public void componentResized(ComponentEvent arg0) {}
+
+			@Override
+			public void componentShown(ComponentEvent arg0) {}
+	    	  
+	      });
 
 	      mySwingWorker.addPropertyChangeListener(new PropertyChangeListener() {
 
@@ -319,6 +338,8 @@ public class SelectPanel extends Panel {
 	      stateDisplayer.setLocationRelativeTo(win);
 	      stateDisplayer.setVisible(true);
 	   }
+	
+	
 	
 	
 	

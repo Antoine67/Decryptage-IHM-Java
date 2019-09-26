@@ -84,4 +84,11 @@ public class View {
 		return controller.loadFilesToDecrypt();
 	}
 	
+
+	public void stopAllThreads() {
+		System.out.println("sould stop threads");
+		controller.stopAllThreads();
+		
+	}
+	
 }

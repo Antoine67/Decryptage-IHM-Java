@@ -32,6 +32,7 @@ public class Controller {
 	private static String CLUE_ABOUT_KEY = "awqp";
 	
 	private int triedKeys = 0;
+	private MultiThreading multiThreading;
 	
 	public Controller() throws SQLException {
 		
@@ -92,7 +93,7 @@ public class Controller {
 		
 		//textUncrypted = decrypter.letsDecrypt(textCrypted,CLUE_ABOUT_KEY);
 		
-		MultiThreading multiThreading = new MultiThreading(this, 1,textCrypted, CLUE_ABOUT_KEY); 
+		this.multiThreading = new MultiThreading(this, 1,textCrypted, CLUE_ABOUT_KEY); 
 		textUncrypted = multiThreading.launch();
 		
 		 if(textUncrypted != null) {
@@ -102,6 +103,10 @@ public class Controller {
 		 }else return false;
 		
 	
+	}
+	
+	public void stopAllThreads() {
+		this.multiThreading.stopThread();
 	}
 	
 	
