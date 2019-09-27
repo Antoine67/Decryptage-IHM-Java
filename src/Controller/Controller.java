@@ -159,4 +159,10 @@ public class Controller {
 		return true;
 	}
 
+	public Boolean decryptWithFrequency(String source_path, String path) {
+		source_path = folderToStoreFileToDecrypt + "\\"+ source_path;
+		String toDecryptData = model.getData(source_path);
+		return new FrequencyAnalysis().decryptWithFrequency(toDecryptData, path, model);
+	}
+
 }

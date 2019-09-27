@@ -54,7 +54,7 @@ public class SelectPanel extends Panel {
 	private JButton decryptWithKeyButton = new JButton ("Décrypter avec une clé spécifique");
 	private TextField customKey = new TextField("awqpmndfgtej");
 	
-	private JButton decryptWithFrequency = new JButton ("Décrypter à l'aide de la fréquence d'apparition");
+	private JButton decryptWithFrequency = new JButton ("Décrypter à l'aide de l'analyse fréquentielle");
 	
 		
 
@@ -134,7 +134,6 @@ public class SelectPanel extends Panel {
 
 
 	public void paintComponent(Graphics g){
-		
 		try {
 		      Image img = ImageIO.read(new File("assets/img/cesi.png"));
 		      g.drawImage(img, 30, 10, this);
@@ -238,7 +237,11 @@ public class SelectPanel extends Panel {
 	  
 	  class DecryptFrequencyActionListener implements ActionListener{
 		    public void actionPerformed(ActionEvent e) {
-		    	
+		    	if(view.decryptWithFrequency(fileToDecrypt.getName(), destinationFile.getPath())) {
+		    		displaySuccessMessage("Fichier \""+fileToDecrypt.getName()+"\"decrypté dans "+destinationFile.getName());
+		    	}else {
+		    		displayErrorMessage("Erreur");
+		    	}
 		    }
 	  }
 	  

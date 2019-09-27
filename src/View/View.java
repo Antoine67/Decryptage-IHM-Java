@@ -95,5 +95,11 @@ public class View {
 		return controller.decryptWithKey(key, toDecrypt, path);
 		
 	}
+
+
+	public Boolean decryptWithFrequency(String fileName, String path) {
+		return controller.decryptWithFrequency(fileName, path);
+		
+	}
 	
 }
