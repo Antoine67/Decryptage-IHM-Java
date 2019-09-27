@@ -101,5 +101,11 @@ public class View {
 		return controller.decryptWithFrequency(fileName, path);
 		
 	}
+
+
+	public void changeDictionnaryState(boolean state) {
+		controller.changeDictionnaryState(state);
+		
+	}
 	
 }

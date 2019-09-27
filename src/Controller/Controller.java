@@ -27,12 +27,14 @@ public class Controller {
 	
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
-	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi école d'ingénieurs \nDécrypté par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
-	private static String CLUE_ABOUT_KEY = "awqpmndfgte";
+	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi �cole d'ingénieurs \nD�crypt� par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
+	private static String CLUE_ABOUT_KEY = "awqpmndfg";
 	// Clé finale trouvée : awqpmndfgtej
 	
 	private int triedKeys = 0;
 	private MultiThreading multiThreading;
+	
+	public boolean shouldUseDictionnaryCorrector = false;
 	
 	public Controller() throws SQLException {
 		
@@ -163,6 +165,11 @@ public class Controller {
 		source_path = folderToStoreFileToDecrypt + "\\"+ source_path;
 		String toDecryptData = model.getData(source_path);
 		return new FrequencyAnalysis().decryptWithFrequency(toDecryptData, path, model);
+	}
+
+	public void changeDictionnaryState(boolean state) {
+		this.shouldUseDictionnaryCorrector  = state;
+		
 	}
 
 }
