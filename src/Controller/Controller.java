@@ -27,13 +27,12 @@ public class Controller {
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
 	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi école d'ingÃ©nieurs \nDécrypté par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
-	private static String CLUE_ABOUT_KEY = "awqpmndfg";
+	private static String CLUE_ABOUT_KEY = "awqpmndfgte";
 	// Clé finale trouvée : awqpmndfgtej
 	
 	private int triedKeys = 0;
 	private MultiThreading multiThreading;
 	
-	public boolean shouldUseDictionnaryCorrector = false;
 	
 	public Controller() throws SQLException {
 		
@@ -166,7 +165,7 @@ public class Controller {
 	}
 
 	public void changeDictionnaryState(boolean state) {
-		this.shouldUseDictionnaryCorrector  = state;
+		model.setUseTheLarousse(state);
 		
 	}
 

@@ -8,7 +8,7 @@ public class LarousseCorrector {
 	public static String LarousseCorrectorRun(String textDecrypted, Model model) {
 		String result = "";
 		
-		
+		model.setUseTheLarousse(true);
 		textDecrypted = textDecrypted.replace(",", " ");
 		textDecrypted = textDecrypted.replace(".", " ");
 		textDecrypted = textDecrypted.replace("!", "");
@@ -29,6 +29,7 @@ public class LarousseCorrector {
 			}
 		}
 		result = String.join(" ", textDecryptedCut);
+		model.setUseTheLarousse(false);
 		return result;
 	}
 	

@@ -97,11 +97,9 @@ public class Model {
 
 	public String selectWord(String word) {
 		if (dictionary.contains(word)) {
-			System.out.println("word : " + word);
 			return word;
 		} 
 		else if(!selectWordWithError(word).equals(word) && useTheLarousse) {
-			System.out.println("word2 : " + selectWordWithError(word));
 			return selectWordWithError(word);
 		} else
 			return null;
