@@ -102,8 +102,8 @@ public class ThreadDecrypt2 extends Thread {
 		if (validateKey(intArrayToString(controller.getModel().encrypt(messageADecrypter, temp_key)))) {
 			// There, the key is considered as correct
 			controller.setProgressBarState(false);
-			System.out.println(intArrayToString(controller.getModel().encrypt(messageADecrypter, temp_key)));
-			return intArrayToString(controller.getModel().encrypt(messageADecrypter, temp_key));
+			//System.out.println(intArrayToString(controller.getModel().encrypt(messageADecrypter, temp_key)));
+			return LarousseCorrector.LarousseCorrectorRun(intArrayToString(controller.getModel().encrypt(messageADecrypter, temp_key)), this.controller.getModel());
 		}
 		return null;
 
@@ -177,11 +177,10 @@ public class ThreadDecrypt2 extends Thread {
 		toValidate = toValidate.replace("'", " ");
 		toValidate = toValidate.replace("  ", " ");
 
-		toValidate = stripAccents(toValidate);
+		toValidate = LarousseCorrector.stripAccents(toValidate);
 		toValidate = toValidate.toLowerCase();
 		String[] toTry = toValidate.split(" ");
 
-		System.out.println(toValidate);
 
 		for (int e = 0; e < toTry.length; e++) {
 			// if(!toTry[e].matches("^[a-z0-9]+$")) { return false;} //Only alpha numeric
@@ -231,9 +230,5 @@ public class ThreadDecrypt2 extends Thread {
 		return array;
 	}
 
-	public String stripAccents(String s) {
-		s = Normalizer.normalize(s, Normalizer.Form.NFD);
-		s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-		return s;
-	}
+	
 }

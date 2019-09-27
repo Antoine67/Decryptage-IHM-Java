@@ -21,6 +21,8 @@ public class Model {
 	/* Dictionary as string then cut and store it as an ArrayList */
 
 	private ArrayList<String> dictionary = new ArrayList<String>();
+	
+	private boolean useTheLarousse = false;
 
 	public Model() {
 
@@ -95,9 +97,35 @@ public class Model {
 
 	public String selectWord(String word) {
 		if (dictionary.contains(word)) {
+			System.out.println("word : " + word);
 			return word;
+		} 
+		else if(!selectWordWithError(word).equals(word) && useTheLarousse) {
+			System.out.println("word2 : " + selectWordWithError(word));
+			return selectWordWithError(word);
 		} else
 			return null;
+	}
+	
+	
+	public String selectWordWithError(String word) {
+		int errors = 0;
+		for(String n : dictionary) {
+			if(n.length() == word.length()) {
+				for(int y = 0; y < word.length(); y++) {
+					if(n.charAt(y) != word.charAt(y)) {
+						errors++;
+					}
+				}
+				if(errors == 1) {
+					return n;
+				}
+				else {
+					errors = 0;
+				}
+			}
+		}
+		return word;
 	}
 
 	private ArrayList<String> cutAndStoreAsArray(String str, String divider) {
@@ -107,6 +135,14 @@ public class Model {
 
 		ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(array));
 		return arrayList;
+	}
+	
+	public Boolean getUseTheLarousse() {
+		return this.useTheLarousse;
+	}
+	
+	public void setUseTheLarousse(Boolean useTheLarousse) {
+		this.useTheLarousse = useTheLarousse;
 	}
 
 }
