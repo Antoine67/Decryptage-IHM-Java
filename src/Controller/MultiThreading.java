@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class MultiThreading {
 	Controller controller;
-	int a = 0;
 	
 	//Key found
 	boolean keyFinded = false;

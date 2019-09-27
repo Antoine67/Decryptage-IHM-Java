@@ -35,7 +35,7 @@ public class Model {
 		}
 	}
 
-	/* Composant dâ€™accÃ¨s aux donnÃ©es [CAD] */
+	/* Composant d'accès aux données [CAD] */
 
 	public ArrayList<User> getRows(String rq_sql, String resultSetName) throws SQLException {
 		return databaseDAO.getRows(rq_sql, resultSetName);

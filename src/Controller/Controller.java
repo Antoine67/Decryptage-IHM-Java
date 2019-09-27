@@ -22,14 +22,13 @@ import View.View;
 public class Controller {
 	private Model model;
 	private View view;
-	private Decrypter decrypter;
 	private SelectPanel selectedPane;
 	
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
 	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi école d'ingÃ©nieurs \nDécrypté par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
 	private static String CLUE_ABOUT_KEY = "awqpmndfg";
-	// ClÃ© finale trouvÃ©e : awqpmndfgtej
+	// Clé finale trouvée : awqpmndfgtej
 	
 	private int triedKeys = 0;
 	private MultiThreading multiThreading;
@@ -123,7 +122,6 @@ public class Controller {
 	public void setModelAndView(Model model, View view) throws InterruptedException {
 		this.model = model;
 		this.view = view;
-		this.decrypter = new Decrypter(this);
 		
 	}
 
