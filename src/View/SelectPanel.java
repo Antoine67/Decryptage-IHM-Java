@@ -1,5 +1,6 @@
 package View;
 import java.awt.BorderLayout;
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -51,10 +54,12 @@ public class SelectPanel extends Panel {
 	private JLabel filesLabel = new JLabel("Liste des fichiers cryptés enregistrés",JLabel.CENTER);
 	private JButton refresh = new JButton ("Rafraichir les fichiers");
 	
+	private Checkbox activateDico = new Checkbox ("Activer la correction automatique");
+	
 	private JButton decryptWithKeyButton = new JButton ("Décrypter avec une clé spécifique");
 	private TextField customKey = new TextField("awqpmndfgtej");
 	
-	private JButton decryptWithFrequency = new JButton ("Décrypter à l'aide de la fréquence d'apparition");
+	private JButton decryptWithFrequency = new JButton ("Décrypter à l'aide de l'analyse fréquentielle");
 	
 		
 
@@ -89,6 +94,7 @@ public class SelectPanel extends Panel {
 	    this.add(decryptWithKeyButton);
 	    this.add(customKey);
 	    this.add(decryptWithFrequency);
+	    this.add(activateDico);
 	    this.setBackground(Color.white);
 	    this.setVisible(true); 
 	    this.setLayout(null);
@@ -109,6 +115,8 @@ public class SelectPanel extends Panel {
 	    decryptWithKeyButton.setBounds(80,550, 300,25);
 	    customKey.setBounds(80,585, 300,25);
 	    
+	    activateDico.setBounds(125, 700, 300, 25);
+	    
 	    
 	    refresh.setBounds(650,80, 200,25);
 	    
@@ -122,6 +130,7 @@ public class SelectPanel extends Panel {
 	    refresh.addActionListener(new RefreshActionListener());
 	    decryptWithFrequency.addActionListener(new DecryptFrequencyActionListener());
 	    decryptWithKeyButton.addActionListener(new DecryptWithKeyActionListener());
+	    activateDico.addItemListener(new DictionnaryCheckboxActionListener());
 	    
 	    decrypt.setEnabled(false); 
 	    decryptWithKeyButton.setEnabled(false); 
@@ -134,7 +143,6 @@ public class SelectPanel extends Panel {
 
 
 	public void paintComponent(Graphics g){
-		
 		try {
 		      Image img = ImageIO.read(new File("assets/img/cesi.png"));
 		      g.drawImage(img, 30, 10, this);
@@ -238,9 +246,28 @@ public class SelectPanel extends Panel {
 	  
 	  class DecryptFrequencyActionListener implements ActionListener{
 		    public void actionPerformed(ActionEvent e) {
-		    	
+		    	if(view.decryptWithFrequency(fileToDecrypt.getName(), destinationFile.getPath())) {
+		    		displaySuccessMessage("Fichier \""+fileToDecrypt.getName()+"\"decrypté dans "+destinationFile.getName());
+		    	}else {
+		    		displayErrorMessage("Erreur");
+		    	}
 		    }
 	  }
+	  class DictionnaryCheckboxActionListener implements ItemListener{
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED ) {
+					view.changeDictionnaryState(true);
+				}else {
+					view.changeDictionnaryState(false);
+				}
+				
+				
+			}
+	  }
+	  
+	  
 	  
 	  
 	  

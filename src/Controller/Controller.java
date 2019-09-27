@@ -22,17 +22,18 @@ import View.View;
 public class Controller {
 	private Model model;
 	private View view;
-	private Decrypter decrypter;
 	private SelectPanel selectedPane;
 	
 	public static String folderToStoreFileToDecrypt = System.getProperty("user.dir")+"\\filesToDecrypt\\";
 
-	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi √©cole d'ing√©nieurs \nD√©crypt√© par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
-	private static String CLUE_ABOUT_KEY = "awqpmndfgte";
-	// Cl√© finale trouv√©e : awqpmndfgtej
+	private static String DEFAULT_MESSAGE_DECRYPTED = "Septembre 2019 - Cesi Ècole d'ing√©nieurs \nDÈcryptÈ par le groupe 4 :\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
+	private static String CLUE_ABOUT_KEY = "awqpmndfg";
+	// ClÈ finale trouvÈe : awqpmndfgtej
 	
 	private int triedKeys = 0;
 	private MultiThreading multiThreading;
+	
+	public boolean shouldUseDictionnaryCorrector = false;
 	
 	public Controller() throws SQLException {
 		
@@ -121,7 +122,6 @@ public class Controller {
 	public void setModelAndView(Model model, View view) throws InterruptedException {
 		this.model = model;
 		this.view = view;
-		this.decrypter = new Decrypter(this);
 		
 	}
 
@@ -157,6 +157,17 @@ public class Controller {
 		String toDecryptData = model.getData(source_path);
 		model.setData(path, ThreadDecrypt2.intArrayToString(model.encrypt(toDecryptData, key)));
 		return true;
+	}
+
+	public Boolean decryptWithFrequency(String source_path, String path) {
+		source_path = folderToStoreFileToDecrypt + "\\"+ source_path;
+		String toDecryptData = model.getData(source_path);
+		return new FrequencyAnalysis().decryptWithFrequency(toDecryptData, path, model);
+	}
+
+	public void changeDictionnaryState(boolean state) {
+		this.shouldUseDictionnaryCorrector  = state;
+		
 	}
 
 }
